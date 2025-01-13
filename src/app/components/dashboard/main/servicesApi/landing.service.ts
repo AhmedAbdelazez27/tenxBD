@@ -34,23 +34,23 @@ export class LandingService {
     return this.sliderDataSubject.getValue();
   }
 
-
-
-
-
-
-
-  getDonations(): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}WebsiteQuickDonation/GetAllWebsiteQuickDonation`)
+  getProducts(companyName:string): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}CrmProducts/GetAllForWebsite?TenancyName=${companyName}`)
   }
 
   getProjects(companyName:string): Observable<any>{
     return this.http.get<any>(`${this.baseUrl}CrmProjects/GetAllForWebsite?TenancyName=${companyName} `)
   }
 
-  getSingleEmergency(id:any): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}TmProjectCampain/GetWebsiteTmProjectCampain?Id=${id}`)
+  getServices(companyName:string): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}CrmServices/GetAllForWebsite?TenancyName=${companyName}`)
   }
+
+
+
+
+
+
 
   getAllWebsiteStatistic(): Observable<any>{
     return this.http.get<any>(`${this.baseUrl}WebsiteStatistics/GetAllWebsiteStatistic?IsActive=true&StatisticsTypeLkpId=12442`)

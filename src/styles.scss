@@ -1,21 +1,25 @@
 [dir="ltr"] {
-  
 
+  /* Primary and Secondary Colors */
+  --themePrimaryColor: #1076BE; /* Default value */
+  --themeSecondaryColor: #24A9E1; /* Default value */
+    
 
     /*==================== Primary Color ========================*/
-    $Color-blue: #1076BE;
-    $Color-cyan-hover: #1076BE;
-    $Color-btn-blue: #1076BE;
-    $Color-title: #1076BE;
-    $Color-nav-link-active: #1076BE;
-    $Color-dark-blue: #1076BE;
-    $Color-label: #1076BE;
+    $Color-blue: var(--themePrimaryColor);
+    $Color-cyan-hover: var(--themePrimaryColor);
+    $Color-btn-blue: var(--themePrimaryColor);
+    $Color-title: var(--themePrimaryColor);
+    $Color-nav-link-active: var(--themePrimaryColor);
+    $Color-dark-blue: var(--themePrimaryColor);
+    $Color-label: var(--themePrimaryColor);
+
     /*==================== Secondary Color ========================*/
-    $Color-cyan: #24A9E1;
-    $Color-blue-hover: #24A9E1;
-    $Color-btn-cyan: #24A9E1;
-    $Color-carousel-indicators-active: #24A9E1;
-    $Color-owl-dots: #24A9E1;
+    $Color-cyan: var(--themeSecondaryColor);
+    $Color-blue-hover: var(--themeSecondaryColor);
+    $Color-btn-cyan: var(--themeSecondaryColor);
+    $Color-carousel-indicators-active: var(--themeSecondaryColor);
+    $Color-owl-dots: var(--themeSecondaryColor);
     /*==================== Other Colors ========================*/
     $Color-btn-cyan-text: #fff;
     $Color-btn-blue-text: #fff;
@@ -33,7 +37,6 @@
     $Color-nav: #fff;
     $Color-nav-link: #949494;
     $Color-footer-container: #f5f5f5;
-
 
 
 body {
@@ -483,11 +486,15 @@ label {
         object-fit: cover;
     }
 }
-
+.card-img-top{
+    height: 350px !important;
+}
 
 }
   
   [dir="rtl"] {
- 
+    .card-img-top{
+        height: 350px !important;
+    }
 
   }

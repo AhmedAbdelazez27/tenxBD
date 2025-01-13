@@ -40,23 +40,6 @@ export class LandingComponent implements OnInit {
   socialLinks :any;
   @ViewChild('owlCarousel', { static: false }) owlCarousel: any;
   @ViewChild('owlCarousel2', { static: false }) owlCarousel2: any;
-  products = [
-    {
-      name: 'Product 1',
-      description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-      image: '/images/products/image-1.png',
-    },
-    {
-      name: 'Product 2',
-      description: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s.',
-      image: '/images/products/image-2.png',
-    },
-    {
-      name: 'Product 3',
-      description: 'It has survived not only five centuries but also the leap into electronic typesetting.',
-      image: '/images/products/image-3.png',
-    },
-  ];
   
   currentSection: string = 'slider';
 
@@ -68,6 +51,8 @@ navLinks = [
   { name: 'Projects', fragment: 'projects' },
   { name: 'Contact', fragment: 'contact' },
 ];
+  productsItems: any[]=[];
+  services: any[]=[];
 
 
   constructor(
@@ -145,9 +130,9 @@ navLinks = [
     
   }
   ngOnInit(): void {
-    // this.gettingSliderData();
+    this.gettingProducts();
     this.getListProjects();
-    // this.getAllWebsiteStatistic();
+    this.getAllWebService();
     // this.getAllTmAutoCouponsForWebsite();
     // this.getAllPartnersForWebsite();
     this.landingService.sliderData$.subscribe((data) => {
@@ -205,18 +190,17 @@ navLinks = [
       next: (res) => {
         this.sliderItems = res.result.filter((item: { isActive: any; }) => item.isActive);
         this._SpinnerService.hideSpinner();
-        this.gettingDonations();
       },
       error: (err) => {
-        this.gettingDonations();
+        
       }
     })
   }
 
-  gettingDonations() {
-    this.landingService.getDonations().subscribe({
+  gettingProducts() {
+    this.landingService.getProducts("Propertyuae").subscribe({
       next: (res) => {
-        this.donationsItems = res.result.filter((item: { isActive: any; }) => item.isActive);
+        this.productsItems = res.result.filter((item: { isActive: any; }) => item.isActive);
       },
       error: (err) => {
       }
@@ -233,17 +217,16 @@ navLinks = [
     })
   }
   animatedValues: number[] = []; // Array to store animated values
-  getAllWebsiteStatistic() {
-    this.landingService.getAllWebsiteStatistic().subscribe({
-      next: (res) => {
-        this.websiteStatistic = res.result;
-
-        // Initialize animation for each statistic
-        this.websiteStatistic.forEach((stat, index) => {
-          this.animateCounter(0, stat.value, 10, (currentValue) => {
-            this.animatedValues[index] = currentValue;
-          });
-        });
+  getAllWebService() {
+    this.landingService.getServices('Propertyuae').subscribe({
+      next: (res:any) => {
+        let baseServices = [...res.result];
+        
+        for (let i = 0; i < baseServices.length; i += 2) {
+          this.services.push(baseServices.slice(i, i + 2));
+        }
+        console.log(this.services);
+        
       }
     })
   }

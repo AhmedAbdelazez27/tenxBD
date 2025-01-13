@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, RendererFactory2, RendererStyleFlags2 } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CartService } from './shared/services/cart.service';
@@ -14,12 +14,15 @@ import { SpinnerService } from './shared/services/spinner.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
+  private renderer: Renderer2;
   constructor(
     private cartService: CartService,
     private translate: TranslateService,
     private landingService:LandingService,
     private _SpinnerService: SpinnerService,
+    rendererFactory: RendererFactory2,
   ){
+    this.renderer = rendererFactory.createRenderer(null, null);
     this.initLanguage();
   }
   ngOnInit(): void {
@@ -27,6 +30,11 @@ export class AppComponent implements OnInit{
      // Fetch slider data once at app initialization
      this.landingService.getSlider().subscribe({
       next : (res)=>{
+        console.log("res = ",res?.result[0]?.themePrimaryColor);
+        
+        this.renderer.setStyle(document.documentElement, '--themePrimaryColor', res?.result[0]?.themePrimaryColor, RendererStyleFlags2.Important);
+        this.renderer.setStyle(document.documentElement, '--themeSecondaryColor',res?.result[0]?.themeSecondaryColor , RendererStyleFlags2.Important);
+        // this.renderer.setStyle(document.documentElement, variable, value);
         this._SpinnerService.hideSpinner();
       },
       error : (err)=>{

@@ -76,93 +76,26 @@
         </div>
     </section>
 
-    <section id="products" class="pt-150">
+    <section id="products" class="pt-150 mb-2">
 
         <div class="container">
             <h2 class="text-center blue mb-4">
                 Our Products
             </h2>
 
-            <ng-container *ngIf="customOptions && products && products.length > 0">
+            <ng-container *ngIf="customOptions && productsItems && productsItems.length > 0">
               <owl-carousel-o [options]="customOptions" >
-                      <ng-template carouselSlide>
-                          <div class="item">
-                              <div class="card">
-                                  <img src="../../../../../assets/images/products/image-1.png" class="card-img-top" />
-                                  <div class="card-body">
-                                      <h5 class="card-title dark-blue">Product Name</h5>
-                                      <p class="font-14">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                          industry. Lorem
-                                          Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-      
-                                      <div class="d-flex justify-content-start gap-3">
-                                          <button class="btn btn-cyan">
-                                              More...
-                                          </button>
-                                          <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                              Request Product
-                                          </button>
-                                      </div>
-      
-                                  </div>
-                              </div>
-                          </div>
-                      </ng-template>
-                      <ng-template carouselSlide>
-                          <div class="item">
-                              <div class="card">
-                                  <img src="../../../../../assets/images/products/image-1.png" class="card-img-top" />
-                                  <div class="card-body">
-                                      <h5 class="card-title dark-blue">Product Name</h5>
-                                      <p class="font-14">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                          industry. Lorem
-                                          Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-      
-                                      <div class="d-flex justify-content-start gap-3">
-                                          <button class="btn btn-cyan">
-                                              More...
-                                          </button>
-                                          <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                              Request Product
-                                          </button>
-                                      </div>
-      
-                                  </div>
-                              </div>
-                          </div>
-                      </ng-template>
-                      <ng-template carouselSlide>
-                          <div class="item">
-                              <div class="card">
-                                  <img src="../../../../../assets/images/products/image-1.png" class="card-img-top" />
-                                  <div class="card-body">
-                                      <h5 class="card-title dark-blue">Product Name</h5>
-                                      <p class="font-14">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                          industry. Lorem
-                                          Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-      
-                                      <div class="d-flex justify-content-start gap-3">
-                                          <button class="btn btn-cyan">
-                                              More...
-                                          </button>
-                                          <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                              Request Product
-                                          </button>
-                                      </div>
-      
-                                  </div>
-                              </div>
-                          </div>
-                      </ng-template>
-                      <ng-template carouselSlide>
+                <ng-container *ngFor="let product of productsItems">
+                    <ng-template carouselSlide>
+
                         <div class="item">
                             <div class="card">
-                                <img src="../../../../../assets/images/products/image-1.png" class="card-img-top" />
+                                <img [src]="product?.filepath" class="card-img-top" />
                                 <div class="card-body">
-                                    <h5 class="card-title dark-blue">Product Name</h5>
-                                    <p class="font-14">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                        industry. Lorem
-                                        Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                                    <h5 class="card-title dark-blue">{{ currentLang === 'ar' ? product?.nameAr : product?.nameEn }}</h5>
+                                    <p class="font-14" [innerHTML]="currentLang === 'ar' ? product?.contentAr : product?.contentEn">
+                                     
+                                    </p>
     
                                     <div class="d-flex justify-content-start gap-3">
                                         <button class="btn btn-cyan">
@@ -177,6 +110,7 @@
                             </div>
                         </div>
                     </ng-template>
+                </ng-container>
               </owl-carousel-o>
           </ng-container>
         </div>
@@ -188,18 +122,20 @@
             <h2 class="text-center white mb-4">
                 Our Services
             </h2>
-            <ng-container *ngIf="customOptionsServices && products && products.length > 0">
+            <ng-container *ngIf="customOptionsServices && services && services.length > 0">
               <owl-carousel-o [options]="customOptionsServices" >
-                      <ng-template carouselSlide>
+                <ng-container *ngFor="let item of services">
+                    <ng-template carouselSlide>
                         <div class="item">
 
-                          <div class="radius back-white p-4 row mb-3">
+                          <div *ngIf="item[0]" class="radius back-white p-4 row mb-3">
                               <div class="col-xl-4 col-lg-3 p-0">
-                                  <img src="../../../../../assets/images/services/image.png" class="about-img radius service-img" />
+                                  <img [src]="item[0]?.filepath" class="about-img radius service-img" style="width: 190px; height: 210px;" />
                               </div>
                               <div class="col-xl-8 col-lg-9 p-0 px-lg-3">
-                                  <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">Service Name</h5>
-                                  <p class="font-14">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                                  <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">{{ currentLang === 'ar' ? item[0]?.nameAr : item[0]?.nameEn }}</h5>
+                                  <p class="font-14" [innerHTML]=" currentLang === 'ar' ? item[0]?.contentAr : item[0]?.contentEn">
+                                  </p>
       
                                   <div class="d-flex justify-content-start gap-3">
                                       <button class="btn btn-cyan">
@@ -211,13 +147,14 @@
                                   </div>
                               </div>
                           </div>
-                          <div class="radius back-white p-4 row mb-3">
+                          <div *ngIf="item[1]" class="radius back-white p-4 row mb-3">
                               <div class="col-xl-4 col-lg-3 p-0">
-                                  <img src="../../../../../assets/images/services/image.png" class="about-img radius service-img" />
+                                  <img [src]="item[1]?.filepath" class="about-img radius service-img" style="width: 190px; height: 210px;"  />
                               </div>
                               <div class="col-xl-8 col-lg-9 p-0 px-lg-3">
-                                  <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">Service Name</h5>
-                                  <p class="font-14">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                                  <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">{{ currentLang === 'ar' ? item[1]?.nameAr : item[1]?.nameEn }}</h5>
+                                  <p class="font-14" [innerHTML]=" currentLang === 'ar' ? item[1]?.contentAr : item[1]?.contentEn">
+                                  </p>
       
                                   <div class="d-flex justify-content-start gap-3">
                                       <button class="btn btn-cyan">
@@ -232,91 +169,7 @@
       
                       </div>
                       </ng-template>
-                      <ng-template carouselSlide>
-                        <div class="item">
-
-                          <div class="radius back-white p-4 row mb-3">
-                              <div class="col-xl-4 col-lg-3 p-0">
-                                  <img src="../../../../../assets/images/services/image.png" class="about-img radius service-img" />
-                              </div>
-                              <div class="col-xl-8 col-lg-9 p-0 px-lg-3">
-                                  <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">Service Name</h5>
-                                  <p class="font-14">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-      
-                                  <div class="d-flex justify-content-start gap-3">
-                                      <button class="btn btn-cyan">
-                                          More...
-                                      </button>
-                                      <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                          Request Service
-                                      </button>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="radius back-white p-4 row mb-3">
-                              <div class="col-xl-4 col-lg-3 p-0">
-                                  <img src="../../../../../assets/images/services/image.png" class="about-img radius service-img" />
-                              </div>
-                              <div class="col-xl-8 col-lg-9 p-0 px-lg-3">
-                                  <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">Service Name</h5>
-                                  <p class="font-14">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-      
-                                  <div class="d-flex justify-content-start gap-3">
-                                      <button class="btn btn-cyan">
-                                          More...
-                                      </button>
-                                      <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                          Request Service
-                                      </button>
-                                  </div>
-                              </div>
-                          </div>
-      
-                      </div>
-                      </ng-template>
-                      <ng-template carouselSlide>
-                        <div class="item">
-
-                          <div class="radius back-white p-4 row mb-3">
-                              <div class="col-xl-4 col-lg-3 p-0">
-                                  <img src="../../../../../assets/images/services/image.png" class="about-img radius service-img" />
-                              </div>
-                              <div class="col-xl-8 col-lg-9 p-0 px-lg-3">
-                                  <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">Service Name</h5>
-                                  <p class="font-14">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-      
-                                  <div class="d-flex justify-content-start gap-3">
-                                      <button class="btn btn-cyan">
-                                          More...
-                                      </button>
-                                      <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                          Request Service
-                                      </button>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="radius back-white p-4 row mb-3">
-                              <div class="col-xl-4 col-lg-3 p-0">
-                                  <img src="../../../../../assets/images/services/image.png" class="about-img radius service-img" />
-                              </div>
-                              <div class="col-xl-8 col-lg-9 p-0 px-lg-3">
-                                  <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">Service Name</h5>
-                                  <p class="font-14">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-      
-                                  <div class="d-flex justify-content-start gap-3">
-                                      <button class="btn btn-cyan">
-                                          More...
-                                      </button>
-                                      <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                          Request Service
-                                      </button>
-                                  </div>
-                              </div>
-                          </div>
-      
-                      </div>
-      
-                      </ng-template>
+                </ng-container>
               </owl-carousel-o>
           </ng-container>
         </div>
@@ -343,11 +196,11 @@
             <div class="row">
               <ng-container *ngIf="customOptions && projects && projects.length > 0">
                 <owl-carousel-o [options]="customOptions" style="padding: 0 !important; margin: 0 !important;">
-                    <ng-container *ngFor="let project of projects">
+                    <ng-container *ngFor="let project of projects ">
                         <ng-template carouselSlide>
                           <div class="item">
                               <div class="project-container">
-                                  <img src="../../../../../assets/images/projects/Frame 24.png" class="image" />
+                                  <img [src]="project?.filepath" class="image" />
                                   <div class="overlay">
                                       <h6 class="whit text-start mb-3">{{ currentLang === 'ar' ? project.nameAr : project.nameEn }}</h6>
       
