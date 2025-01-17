@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LandingService } from '../../../components/dashboard/main/servicesApi/landing.service';
 
 @Component({
@@ -11,10 +11,11 @@ import { LandingService } from '../../../components/dashboard/main/servicesApi/l
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent implements OnInit{
-  socialLinks ?: { linkedInLink: any; instagramLink: any; facebookLink: any; };
+  socialLinks ?: { linkedInLink: any; instagramLink: any; facebookLink: any; email: any; addressAr: any;addressEn: any; tel: any; };
+  currentLang: string;
 
-  constructor(private landingService: LandingService){
-
+  constructor(private landingService: LandingService ,private translate: TranslateService,){
+    this.currentLang = this.translate.currentLang || this.translate.defaultLang;
   }
 
   ngOnInit(): void {
@@ -23,7 +24,11 @@ export class FooterComponent implements OnInit{
       this.socialLinks = {
         linkedInLink: data[0]?.linkedInLink,
         instagramLink: data[0]?.instagramLink,
-        facebookLink: data[0]?.facebookLink
+        facebookLink: data[0]?.facebookLink,
+        email :  data[0]?.email,
+        tel :  data[0]?.tel,
+        addressAr :  data[0]?.addressAr,
+        addressEn :  data[0]?.addressEn,
       }
       
     });

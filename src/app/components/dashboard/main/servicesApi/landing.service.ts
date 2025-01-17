@@ -46,19 +46,23 @@ export class LandingService {
     return this.http.get<any>(`${this.baseUrl}CrmServices/GetAllForWebsite?TenancyName=${companyName}`)
   }
 
+  getAllWebsiteAbout(companyName:string): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}CrmAboutUs/GetByTenantName?tenantName=${companyName}`)
+  }
+  
+  submitRequest(finalData:any): Observable<any>{
+      return this.http.post<any>(`${this.baseUrl}CRMBDRequests/CreateForERP`,finalData)
+    }
 
-
-
-
-
-
-  getAllWebsiteStatistic(): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}WebsiteStatistics/GetAllWebsiteStatistic?IsActive=true&StatisticsTypeLkpId=12442`)
+  submitRequestContact(finalData:any): Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}CrmContactUs/CreateByTenancyName`,finalData)
   }
 
-  getAllHalls(): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}WebsiteHallsCouncils/GetAllWebsiteHallsCouncils?HallsCouncilsTypeLkpId=12450`)
-  }
+
+
+
+
+
 
   getAllCouncils(): Observable<any>{
     return this.http.get<any>(`${this.baseUrl}WebsiteHallsCouncils/GetAllWebsiteHallsCouncils?HallsCouncilsTypeLkpId=12451`)

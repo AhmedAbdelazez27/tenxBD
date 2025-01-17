@@ -1,112 +1,129 @@
-<section class="mt-150">
-    <div class="container">
-        <div class="text-center mb-5">
-            <img src="../../../../../../assets/images/acheivement.png" style="margin-bottom:24px;">
-            <h1 class="title-blue">
-                {{"ABOUT_TITLE"|translate}}
-                <br />
-                {{"ABOUT_SUBTITLE"|translate}}
-            </h1>
-        </div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="../../../../../../assets/images/logo.png" style=" height: 80px;" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-4">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/Main/Home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">En</a>
+                </li>
+            </ul>
 
+        </div>
+    </div>
+</nav>
+
+<section class="mt-200" *ngIf="aboutInfo">
+    <div class="container">
         <div class="row">
-            <div class="col-md-6" *ngFor="let itemWebsiteAboutUsDept of listWebsiteAboutUsDept ; let index = index"
-                [ngClass]="index %2 ? 'mt-150': 'mb-5'">
-                <div class="about-box-3 mt-1">
-                    <div class="gates-item">
-                        <h5 class="text-28-white">{{currentLang === 'ar' ? itemWebsiteAboutUsDept?.titleAr :
-                            itemWebsiteAboutUsDept?.titleEn}}</h5>
-                        <p class="text-20 white">
-                            {{currentLang === 'ar' ? itemWebsiteAboutUsDept?.deptBodyAr :
-                            itemWebsiteAboutUsDept?.deptBodyEn}}
+            <div class="col-xl-12 p-0">
+                <img [src]="aboutInfo?.aboutUsFilepath" style="height: 350px;" class="about-img radius-top" />
+            </div>
+            <div class="col-xl-12 p-0">
+                <div class="back-white p-4 h-100 w-100 radius-bottom">
+                    <h2 class="blue">About Us</h2>
+                    <p class="text-justify"
+                        [innerHTML]="currentLang === 'ar' ? aboutInfo?.contentAr : aboutInfo?.contentEn">
+                    </p>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<ng-container *ngIf="aboutData">
+    <section class="pt-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 p-0">
+                    <img [src]="aboutData?.visionImage" style="height: 350px;" class="about-img radius-left">
+                </div>
+                <div class="col-xl-6 p-0">
+                    <div class="back-white p-4 h-100 w-100 radius-right">
+                        <h2 class="blue">Vision</h2>
+                        <p class="text-justify">
+                            {{ currentLang === 'ar' ? aboutData?.visionAr : aboutData?.visionEn }}
                         </p>
+
                     </div>
 
                 </div>
             </div>
         </div>
+    </section>
+    <section class="pt-150">
+        <div class="container">
+            <div class="row">
 
+                <div class="col-xl-6 p-0">
+                    <div class="back-white p-4 h-100 w-100 radius-left">
+                        <h2 class="blue">Mission</h2>
+                        <p class="text-justify">
+                            {{ currentLang === 'ar' ? aboutData?.missionAr : aboutData?.missionEn }}</p>
+                    </div>
 
-
-
-    </div>
-</section>
-
-
-<section class="mt-150">
-    <div class="container">
-        <div class="text-center mb-5">
-            <img src="../../../../../../assets/images/acheivement.png" style="margin-bottom:24px;">
-            <h1 class="title-blue mb-4">
-                {{currentLang === 'ar' ? websiteAboutUs?.titleAr : websiteAboutUs?.titleEn}}
-
-            </h1>
-            <p class="text-20" [innerHTML]="currentLang === 'ar' ? websiteAboutUs?.bodyAr : websiteAboutUs?.bodyEn">
-            </p>
+                </div>
+                <div class="col-xl-6 p-0">
+                    <img [src]="aboutData?.missionImage" style="height: 350px;" class="about-img radius-right w-100">
+                </div>
+            </div>
         </div>
-
-
-
-    </div>
-</section>
-
-
-
-<section class="mt-150">
-    <div class="container">
-        <div class="row">
-            <ng-container
-                *ngFor="let itemindexAboutUsBranchs of listWebsiteAboutUsBranchs ;let indexAboutUsBranchs =index">
-                <ng-container *ngIf="indexAboutUsBranchs % 2 == 0">
-                    <div class="col-lg-6 mt-150" >
-                        <!-- [ngClass]="indexAboutUsBranchs%2 ? 'order-lg-5':'order-lg-1'" -->
-                        <img [src]="listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.imagePath"
-                            class="w-100 img-shadow mb-3">
-                    </div>
-
-                    <div class="col-lg-6 mt-150" >
-                        <!-- [ngClass]="indexAboutUsBranchs%2 ? 'order-lg-1':'order-lg-5'" -->
-                        <h1 class="blue">{{currentLang === 'ar' ?
-                            listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.titleAr :
-                            listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.titleEn }}</h1>
-                        <p class="text-22">
-                            {{currentLang === 'ar' ? listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.bodyAr :
-                            listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.bodyEn}}
+    </section>
+    <section class="pt-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 p-0">
+                    <img [src]="aboutData?.valuesImage" style="height: 350px;" class="about-img radius-left">
+                </div>
+                <div class="col-xl-6 p-0">
+                    <div class="back-white p-4 h-100 w-100 radius-right">
+                        <h2 class="blue">Value</h2>
+                        <p class="text-justify">
+                            {{ currentLang === 'ar' ? aboutData?.valuesAr : aboutData?.valuesEn }}
                         </p>
-                        <a [href]="listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.url.startsWith('http') 
-                            ? listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.url 
-                            : 'https://' + listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.url" target="_blank">
-                            <button class="btn btn-blue btn-wide">{{ 'MORE' | translate }}</button>
-                        </a>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="(indexAboutUsBranchs) % 2== 1">
-                    <div class="col-lg-6 mt-150" >
-                        <!-- [ngClass]="indexAboutUsBranchs%2 ? 'order-lg-1':'order-lg-5'" -->
-                        <h1 class="blue">{{currentLang === 'ar' ?
-                            listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.titleAr :
-                            listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.titleEn }}</h1>
-                        <p class="text-22">
-                            {{currentLang === 'ar' ? listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.bodyAr :
-                            listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.bodyEn}}
-                        </p>
-                        <a [href]="listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.url.startsWith('http') 
-                            ? listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.url 
-                            : 'https://' + listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.url" target="_blank">
-                            <button class="btn btn-blue btn-wide">{{'MORE'|translate}}</button>
-                        </a>
+
+
                     </div>
 
-                    <div class="col-lg-6 mt-150">
-                        <!-- [ngClass]="indexAboutUsBranchs%2 ? 'order-lg-5':'order-lg-1'" -->
-                        <img [src]="listWebsiteAboutUsBranchs[indexAboutUsBranchs]?.imagePath"
-                            class="w-100 img-shadow mb-3">
-                    </div>
-
-
-                </ng-container>
-            </ng-container>
-
+                </div>
+            </div>
         </div>
+    </section>
+</ng-container>
+
+<section class="pt-150 mb-150">
+    <div class="container">
+        <h2 class="text-center blue mb-4">
+            Our Team
+        </h2>
+        <ng-container *ngIf="customOptions && teams && teams.length > 0">
+            <owl-carousel-o [options]="customOptions" style="padding: 0 !important; margin: 0 !important;">
+                <ng-container *ngFor="let team of teams ">
+                    <ng-template carouselSlide>
+                        <div class="item">
+                            <div class="card">
+                                <img [src]="team?.imagePath" class="card-img-top" />
+                                <div class="card-body">
+                                    <h5 class="card-title dark-blue">{{ currentLang === 'ar' ? team?.memberNameAr : team?.memberNameEN }}</h5>
+                                    <p class="font-14">{{ currentLang === 'ar' ? team?.positionAr||'Employee' : team?.positionEn||'Employee' }}</p>
+            
+                                </div>
+                            </div>
+                        </div>
+                  </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </ng-container>
     </div>
 </section>

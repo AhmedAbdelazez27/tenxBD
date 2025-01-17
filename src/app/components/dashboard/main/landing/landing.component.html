@@ -52,20 +52,18 @@
 
     <section id="about" class="pt-150">
         <div class="container">
-            <div class="row">
+            <div class="row" *ngIf="aboutInfo">
                 <div class="col-xl-6 p-0">
-                    <img src="../../../../../assets/images/about.png" class="about-img radius-left" />
+                    <img [src]="aboutInfo?.aboutUsFilepath" class="about-img radius-left" />
                 </div>
                 <div class="col-xl-6 p-0">
                     <div class="back-white p-4 h-100 w-100 radius-right">
                         <h2 class="blue">About Us</h2>
-                        <p class="text-justify">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                            <br /> <br />
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose
+                        <p class="text-justify" [innerHTML]="currentLang === 'ar' ? aboutInfo?.contentAr : aboutInfo?.contentEn">
+                            
                         </p>
 
-                        <button class="btn btn-cyan">
+                        <button class="btn btn-cyan" (click)="goDetails('/Main/AboutUs/General')">
                             More...
                         </button>
 
@@ -101,7 +99,7 @@
                                         <button class="btn btn-cyan">
                                             More...
                                         </button>
-                                        <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <button (click)="selectCurrentItem(product,'product')" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             Request Product
                                         </button>
                                     </div>
@@ -141,7 +139,7 @@
                                       <button class="btn btn-cyan">
                                           More...
                                       </button>
-                                      <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                      <button (click)="selectCurrentItem(item[0],'service')" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                           Request Service
                                       </button>
                                   </div>
@@ -160,7 +158,7 @@
                                       <button class="btn btn-cyan">
                                           More...
                                       </button>
-                                      <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                      <button (click)="selectCurrentItem(item[1],'service')"class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                           Request Service
                                       </button>
                                   </div>
@@ -208,9 +206,10 @@
                                           <button class="btn btn-cyan btn-small">
                                               More...
                                           </button>
-                                          <button class="btn btn-blue btn-small" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                          <button (click)="selectCurrentItem(project , 'project')" class="btn btn-blue btn-small" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                               Request Project
                                           </button>
+                                          
                                       </div>
                                   </div>
                               </div>
@@ -230,45 +229,86 @@
                 <h2 class="blue mb-3">Contact Us</h2>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing </p>
 
-                <div class="row">
-                    <div class="col-xl-6">
+                <form [formGroup]="contactForm" (ngSubmit)="onSubmitContact()">
+                    <div class="row">
+                      <div class="col-xl-6">
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Name </label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1">
+                          <label for="name" class="form-label">Name</label>
+                          <input
+                            type="text"
+                            id="name"
+                            formControlName="name"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['name'].invalid }"
+                          />
+                          <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['name'].invalid">
+                            Name is required.
+                          </div>
                         </div>
-                    </div>
-                    <div class="col-xl-6">
+                      </div>
+                      <div class="col-xl-6">
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Email </label>
-                            <input type="email" class="form-control" id="exampleFormControlInput1">
+                          <label for="email" class="form-label">Email</label>
+                          <input
+                            type="email"
+                            id="email"
+                            formControlName="email"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['email'].invalid }"
+                          />
+                          <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['email'].invalid">
+                            Valid email is required.
+                          </div>
                         </div>
-                    </div>
-                    <div class="col-xl-6">
+                      </div>
+                      <div class="col-xl-6">
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Phone Number </label>
-                            <input type="tel" class="form-control" id="exampleFormControlInput1">
+                          <label for="phone1" class="form-label">Phone Number</label>
+                          <input
+                            type="tel"
+                            id="phone1"
+                            formControlName="phone1"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['phone1'].invalid }"
+                          />
+                          <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['phone1'].invalid">
+                            Phone number is required.
+                          </div>
                         </div>
-                    </div>
-                    <div class="col-xl-6">
+                      </div>
+                      <div class="col-xl-6">
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Company Name </label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1">
+                          <label for="companyName" class="form-label">Company Name</label>
+                          <input
+                            type="text"
+                            id="companyName"
+                            formControlName="companyName"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['companyName'].invalid }"
+                          />
+                          <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['companyName'].invalid">
+                            Company name is required.
+                          </div>
                         </div>
-                    </div>
-
-                    <div class="col-xl-12">
+                      </div>
+                  
+                      <div class="col-xl-12">
                         <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Message</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                          <label for="message" class="form-label">Message</label>
+                          <textarea
+                            id="message"
+                            formControlName="message"
+                            class="form-control"
+                            rows="3"
+                          ></textarea>
                         </div>
+                      </div>
+                      <div class="justify-content-center d-flex">
+                        <button type="submit" class="btn btn-cyan btn-wide">Send</button>
+                      </div>
                     </div>
-                    <div class="justify-content-center d-flex">
-                        <button class="btn btn-cyan btn-wide">
-                            Send
-                        </button>
-                    </div>
-
-                </div>
+                  </form>
+                  
 
             </div>
         </div>
@@ -296,48 +336,87 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xl-6">
+                    <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                          <div class="col-xl-6">
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Name </label>
-                                <input type="text" class="form-control" id="exampleFormControlInput1">
+                              <label for="requesterName" class="form-label">Name</label>
+                              <input
+                                type="text"
+                                id="requesterName"
+                                formControlName="requesterName"
+                                class="form-control"
+                                [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['requesterName'].invalid}"
+                              />
+                              <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['requesterName'].invalid">
+                                Name is required.
+                              </div>
                             </div>
-                        </div>
-                        <div class="col-xl-6">
+                          </div>
+                          <div class="col-xl-6">
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Email </label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1">
+                              <label for="email" class="form-label">Email</label>
+                              <input
+                                type="email"
+                                id="email"
+                                formControlName="email"
+                                class="form-control"
+                                [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['email'].invalid}"
+                              />
+                              <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['email'].invalid">
+                                Valid email is required.
+                              </div>
                             </div>
-                        </div>
-                        <div class="col-xl-6">
+                          </div>
+                          <div class="col-xl-6">
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Phone Number </label>
-                                <input type="tel" class="form-control" id="exampleFormControlInput1">
+                              <label for="mobileNo" class="form-label">Phone Number</label>
+                              <input
+                                type="tel"
+                                id="mobileNo"
+                                formControlName="mobileNo"
+                                class="form-control"
+                                [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['mobileNo'].invalid}"
+                              />
+                              <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['mobileNo'].invalid">
+                                Phone number is required.
+                              </div>
                             </div>
-                        </div>
-                        <div class="col-xl-6">
+                          </div>
+                          <div class="col-xl-6">
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Company Name </label>
-                                <input type="text" class="form-control" id="exampleFormControlInput1">
+                              <label for="companyName" class="form-label">Company Name</label>
+                              <input
+                                type="text"
+                                id="companyName"
+                                formControlName="companyName"
+                                class="form-control"
+                                [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['companyName'].invalid}"
+                              />
+                              <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['companyName'].invalid">
+                                Company name is required.
+                              </div>
                             </div>
-                        </div>
-
-                        <div class="col-xl-12">
+                          </div>
+                          <div class="col-xl-12">
                             <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              <label for="notes" class="form-label">Notes</label>
+                              <textarea
+                                id="notes"
+                                formControlName="notes"
+                                class="form-control"
+                              ></textarea>
                             </div>
+                          </div>
+                          <div class="d-flex justify-content-center gap-3">
+                            <button type="submit" class="btn btn-cyan">Send Request</button>
+                            <button type="button" class="btn btn-blue" data-bs-dismiss="modal">Cancel</button>
+                            <!-- Hidden close button -->
+                            <button id="hiddenCloseBtn" type="button" class="d-none" data-bs-dismiss="modal"></button>
                         </div>
-                        <div class="d-flex justify-content-center gap-3">
-                            <button class="btn btn-cyan">
-                                Send Request
-                            </button>
-                            <button class="btn btn-blue"  data-bs-dismiss="modal">
-                                Cancel
-                            </button>
                         </div>
-
-                    </div>
+                      </form>
+                      
                 </div>
                
             </div>

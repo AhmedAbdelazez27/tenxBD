@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { LandingService } from '../servicesApi/landing.service';
 import { SpinnerService } from '../../../../shared/services/spinner.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartService } from '../../../../shared/services/cart.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -53,6 +53,13 @@ navLinks = [
 ];
   productsItems: any[]=[];
   services: any[]=[];
+  aboutInfo:any;
+  requestForm: FormGroup;
+  isSubmitted: boolean = false;
+  requestBDTypeLkpId: any;
+  contactForm: FormGroup;
+  isSubmittedContact:boolean = false;
+  tenancyName: string;
 
 
   constructor(
@@ -62,8 +69,25 @@ navLinks = [
     private messageService: MessageService,
     private cartService: CartService,
     private translate: TranslateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
   ) {
+    this.requestForm = this.fb.group({
+      requesterName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      mobileNo: ['', Validators.required],
+      companyName: ['', Validators.required],
+      notes: ['']
+    });
+
+    // Initialize the reactive form
+    this.contactForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone1 : ['', Validators.required],
+      companyName: ['', Validators.required],
+      message: [''] // Optional field
+    });
     // Determine the language direction dynamically
     const currentLanguage = localStorage.getItem('language') || 'en'; // Assuming 'lang' in localStorage
     if (currentLanguage == 'ar') {
@@ -127,13 +151,21 @@ navLinks = [
     }
     this.currentLang = this.translate.currentLang || this.translate.defaultLang;
     console.log(this.currentLang);
+
+    let hostname = window.location.hostname;
+    if (hostname.includes('localhost')) {
+      this.tenancyName = 'Propertyuae';
+    } else {
+      this.tenancyName = hostname.split(".")[0]; 
+    }
+  
     
   }
   ngOnInit(): void {
     this.gettingProducts();
     this.getListProjects();
     this.getAllWebService();
-    // this.getAllTmAutoCouponsForWebsite();
+    this.getAllWebsiteAbout();
     // this.getAllPartnersForWebsite();
     this.landingService.sliderData$.subscribe((data) => {
       console.log(data);
@@ -258,10 +290,10 @@ navLinks = [
     }, stepTime);
   };
 
-  getAllTmAutoCouponsForWebsite() {
-    this.landingService.getAllTmAutoCouponsForWebsite().subscribe({
+  getAllWebsiteAbout() {
+    this.landingService.getAllWebsiteAbout('Propertyuae').subscribe({
       next: (res) => {
-        this.coupons = res.result;
+        this.aboutInfo = res.result[0];
       }
     })
   };
@@ -281,99 +313,18 @@ navLinks = [
     this.router.navigate([`${route}`]);
   };
 
-  selectCurrentItem(item: any, isRouting: boolean, typeV?: string) {
+  selectCurrentItem(item: any,typeV?: string) {
     console.log(item);
+    this.requestBDTypeLkpId = typeV === 'product' 
+    ? 41891 
+    : typeV === 'service' 
+    ? 41892 
+    : typeV === 'project' 
+    ? 41893 
+    : null;
+    this.currentItemCart = { ...item, typeV }
+  } 
 
-    this.currentItemCart = { ...item, isRouting, typeV }
-  }
-
-
-  addToCartDonation(item: any) {
-    console.log(item);
-    let cartItem: any;
-    if (item?.typeV == 'Coupons') {
-
-      cartItem = {
-        id: item['id'],
-        Image: item.filePath,
-        Name: item.couponNameEn,
-        Price: this.inputValue,
-        Quantity: 1,
-        Type: item?.typeV,
-        ProjectName: null,
-        ProjectNotes: null,
-        SponsorshipFrom: null,
-        PaymentOption: null
-      };
-    } else if (item?.typeV == 'Campaign') {
-      cartItem = {
-        id: item?.id,
-        Image: item?.filePath,
-        Name: item?.titleEn,
-        Price: this.inputValue,
-        Quantity: 1,
-        Type: item?.typeV,
-        ProjectName: null,
-        ProjectNotes: null,
-        SponsorshipFrom: null,
-        PaymentOption: null
-      };
-    }
-
-    // Retrieve existing items from localStorage
-    let oldItems = JSON.parse(localStorage.getItem('items') || '[]');
-
-    // Check if the item already exists
-    let isItemFound = oldItems.some((existingItem: any) => existingItem.id === cartItem['id']);
-
-    if (!isItemFound) {
-      // Add the new item if it does not exist
-      oldItems.push(cartItem);
-      localStorage.setItem('items', JSON.stringify(oldItems));
-      this.cartService.addToCart(cartItem);
-      this.showSuccess();
-      if (this.currentItemCart.isRouting) {
-        console.log("routing here to cart");
-        this.router.navigate(['/Main/Cart']);
-      }
-    } else {
-      this.handleFailure();
-
-    }
-    this.inputValue = 0;
-  }
-
-  addToFastDonation(route: boolean) {
-    let cartItem: any;
-
-    cartItem = {
-      id: null,
-      Image: null,
-      Name: "Fast",
-      Price: this.inputValueFast,
-      Quantity: 1,
-      Type: "Fast Donation",
-      ProjectName: null,
-      ProjectNotes: null,
-      SponsorshipFrom: null,
-      PaymentOption: null
-    };
-
-    // Retrieve existing items from localStorage
-    let oldItems = JSON.parse(localStorage.getItem('items') || '[]');
-
-    // Add the new item if it does not exist
-    oldItems.push(cartItem);
-    this.cartService.addToCart(cartItem);
-    localStorage.setItem('items', JSON.stringify(oldItems));
-    this.showSuccess();
-    if (route) {
-      console.log("routing here to cart");
-      this.router.navigate(['/Main/Cart']);
-    }
-
-    // this.inputValueFast = 10;
-  }
   showSuccess() {  
     this.messageService.add({
       severity: 'success',
@@ -391,4 +342,79 @@ navLinks = [
     });
   };
 
+  onSubmit(): void { 
+    this.isSubmitted = true;
+  
+    if (this.requestForm.valid) {
+      this._SpinnerService.showSpinner();
+      // Set IDs based on type flag
+      const crmProjectId = this.currentItemCart?.typeV === 'project' ?  this.currentItemCart?.id: null;
+      const crmServiceId = this.currentItemCart?.typeV === 'service' ? this.currentItemCart?.id : null;
+      const crmProductId = this.currentItemCart?.typeV === 'product' ? this.currentItemCart?.id : null;
+  
+      // Prepare the final data object
+      const finalData = {
+        ...this.requestForm.value, // Form fields (name, email, etc.)
+        crmProjectId,
+        crmServiceId,
+        crmProductId,
+        tenancyName:this.tenancyName, // Include the tenancy name
+        requestBDTypeLkpId : this.requestBDTypeLkpId
+      };
+  
+      console.log('Form Submitted:', finalData);
+
+      this.landingService.submitRequest(finalData).subscribe({
+        next: (response) => {
+          console.log('Request submitted successfully:', response);
+          this.closeModal();
+          this.showSuccess();
+          this._SpinnerService.hideSpinner();
+        },
+        error: (err) => {
+          this._SpinnerService.hideSpinner();
+          this.handleFailure();
+          console.error('Error submitting request:', err);
+        },
+      });
+  
+    } else {
+      console.warn('Form is invalid');
+    }
+  }
+  closeModal(): void {
+    const closeBtn = document.getElementById('hiddenCloseBtn');
+    if (closeBtn) {
+      closeBtn.click();
+    }
+  }
+
+  onSubmitContact(): void {
+    this.isSubmittedContact = true;
+
+    if (this.contactForm.valid) {
+      console.log('Form Data:', this.contactForm.value);
+      this._SpinnerService.showSpinner();
+      const finalData = {
+        ...this.contactForm.value,
+        tenancyName :this.tenancyName,
+      }
+ 
+      this.landingService.submitRequestContact(finalData).subscribe( {
+        next : response =>{
+          this.showSuccess();
+          this._SpinnerService.hideSpinner();
+          console.log('Form submitted successfully:', response);
+        },
+        error : err=>{
+          this._SpinnerService.hideSpinner();
+          this.handleFailure();
+          console.error('Error submitting request:', err);
+        }
+      });
+    } else {
+      this.handleFailure();
+      console.warn('Form is invalid');
+    }
+  }
 }
