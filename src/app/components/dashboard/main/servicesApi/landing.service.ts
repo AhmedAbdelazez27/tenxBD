@@ -58,15 +58,15 @@ export class LandingService {
     return this.http.post<any>(`${this.baseUrl}CrmContactUs/CreateByTenancyName`,finalData)
   }
 
-
-
-
-
-
-
-  getAllCouncils(): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}WebsiteHallsCouncils/GetAllWebsiteHallsCouncils?HallsCouncilsTypeLkpId=12451`)
+  getProjectDetails(tenancyName:string,aliasName:string): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}CrmProjects/GetByNameAlias?TenancyName=${tenancyName}&NameAlias=${aliasName}`)
   }
+
+
+
+
+
+
 
   getSingleHallCouncils(id:any): Observable<any>{
     return this.http.get<any>(`${this.baseUrl}WebsiteHallsCouncils/GetDetailForWebsiteById?Id=${id}`)

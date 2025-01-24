@@ -1,8 +1,7 @@
 import { aboutChildrenRoutes } from "./main/about/about-children-routes";
 import { authChildrenRoutes } from "./main/auth/auth-children-routes";
-import { donationsChildrenRoutes } from "./main/donations/donations-children-routes";
+import { ProjectInnerComponent } from "./main/landing/inner-pages/project-inner/project-inner.component";
 import { LandingComponent } from "./main/landing/landing.component";
-import { servicesChildrenRoutes } from "./main/services/services-children-routes";
 
 export const dashBoardChildrenRoutes: any[] = [
   { path: '', redirectTo: 'Home', pathMatch: 'full' },
@@ -10,22 +9,6 @@ export const dashBoardChildrenRoutes: any[] = [
     path: 'Home',
     component: LandingComponent,
     pathMatch: 'full'
-  },
-  {
-    path: 'Services',
-    loadComponent: ()=>
-      import('./main/services/services.component').then((c)=>
-        c.ServicesComponent
-      ),
-      children: servicesChildrenRoutes 
-  },
-  {
-    path: 'Donations',
-    loadComponent: ()=>
-      import('./main/donations/donations.component').then((c)=>
-        c.DonationsComponent
-      ),
-      children: donationsChildrenRoutes 
   },
   {
     path: 'AboutUs',
@@ -42,6 +25,11 @@ export const dashBoardChildrenRoutes: any[] = [
         c.AuthComponent
       ),
       children: authChildrenRoutes 
+  },
+  {
+    path: 'ProjectDetail/:itemAliasName',
+    component: ProjectInnerComponent,
+    pathMatch: 'full'
   },
   // Errors
 //   {

@@ -197,13 +197,13 @@
                     <ng-container *ngFor="let project of projects ">
                         <ng-template carouselSlide>
                           <div class="item">
-                              <div class="project-container">
+                              <div class="project-container" style="height:270px">
                                   <img [src]="project?.filepath" class="image" />
                                   <div class="overlay">
                                       <h6 class="whit text-start mb-3">{{ currentLang === 'ar' ? project.nameAr : project.nameEn }}</h6>
       
                                       <div class="d-flex justify-content-start gap-2">
-                                          <button class="btn btn-cyan btn-small">
+                                          <button class="btn btn-cyan btn-small" (click)="goDetails('/Main/ProjectDetail/' + project.nameAlias)">
                                               More...
                                           </button>
                                           <button (click)="selectCurrentItem(project , 'project')" class="btn btn-blue btn-small" data-bs-toggle="modal" data-bs-target="#exampleModal">

@@ -86,7 +86,7 @@ navLinks = [
       email: ['', [Validators.required, Validators.email]],
       phone1 : ['', Validators.required],
       companyName: ['', Validators.required],
-      message: [''] // Optional field
+      message: ['', Validators.required] // Optional field
     });
     // Determine the language direction dynamically
     const currentLanguage = localStorage.getItem('language') || 'en'; // Assuming 'lang' in localStorage
@@ -329,7 +329,7 @@ navLinks = [
     this.messageService.add({
       severity: 'success',
       summary: this.translate.instant('SUCCESS'),
-      detail: this.translate.instant('ADD_TO_CART_SUCCESS'),
+      detail: this.translate.instant('REQUEST_SEND_SUCCESS'),
     });
   };
   
@@ -338,7 +338,7 @@ navLinks = [
     this.messageService.add({
       severity: 'error',
       summary: this.translate.instant('FAILED'),
-      detail: this.translate.instant('ITEM_EXISTS_IN_CART'),
+      detail: this.translate.instant('REQUEST_SEND_FAILED'),
     });
   };
 
