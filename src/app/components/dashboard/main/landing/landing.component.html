@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="../../../../../assets/images/logo.png" style=" height: 80px;" />
+                <img *ngIf="logoImg" [src]="logoImg" style=" height: 80px;" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -91,12 +91,12 @@
                                 <img [src]="product?.filepath" class="card-img-top" />
                                 <div class="card-body">
                                     <h5 class="card-title dark-blue">{{ currentLang === 'ar' ? product?.nameAr : product?.nameEn }}</h5>
-                                    <p class="font-14" [innerHTML]="currentLang === 'ar' ? product?.contentAr : product?.contentEn">
-                                     
+                                    <p class="font-14" [innerHTML]="currentLang === 'ar' ? product?.contentAr.slice(0,100) : product?.contentEn.slice(0,100)" style="height: 50px;">
+                                      {{product?.contentAr.length>100?'.....':''}}
                                     </p>
     
                                     <div class="d-flex justify-content-start gap-3">
-                                        <button class="btn btn-cyan">
+                                        <button class="btn btn-cyan"(click)="goDetails('/Main/ProductDetail/' + product?.nameAlias)">
                                             More...
                                         </button>
                                         <button (click)="selectCurrentItem(product,'product')" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -128,15 +128,15 @@
 
                           <div *ngIf="item[0]" class="radius back-white p-4 row mb-3">
                               <div class="col-xl-4 col-lg-3 p-0">
-                                  <img [src]="item[0]?.filepath" class="about-img radius service-img" style="width: 190px; height: 210px;" />
+                                  <img [src]="item[0]?.filepath" class="about-img radius service-img" style="width: 190px; height: 250px;" />
                               </div>
                               <div class="col-xl-8 col-lg-9 p-0 px-lg-3">
                                   <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">{{ currentLang === 'ar' ? item[0]?.nameAr : item[0]?.nameEn }}</h5>
-                                  <p class="font-14" [innerHTML]=" currentLang === 'ar' ? item[0]?.contentAr : item[0]?.contentEn">
+                                  <p class="font-14" [innerHTML]=" currentLang === 'ar' ? item[0]?.contentAr.slice(0,200) : item[0]?.contentEn.slice(0,200)" style="height: 150px;">
                                   </p>
       
                                   <div class="d-flex justify-content-start gap-3">
-                                      <button class="btn btn-cyan">
+                                      <button class="btn btn-cyan" (click)="goDetails('/Main/ServiceDetail/' + item[0]?.nameAlias)">
                                           More...
                                       </button>
                                       <button (click)="selectCurrentItem(item[0],'service')" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -147,15 +147,15 @@
                           </div>
                           <div *ngIf="item[1]" class="radius back-white p-4 row mb-3">
                               <div class="col-xl-4 col-lg-3 p-0">
-                                  <img [src]="item[1]?.filepath" class="about-img radius service-img" style="width: 190px; height: 210px;"  />
+                                  <img [src]="item[1]?.filepath" class="about-img radius service-img" style="width: 190px; height: 250px;"  />
                               </div>
                               <div class="col-xl-8 col-lg-9 p-0 px-lg-3">
                                   <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">{{ currentLang === 'ar' ? item[1]?.nameAr : item[1]?.nameEn }}</h5>
-                                  <p class="font-14" [innerHTML]=" currentLang === 'ar' ? item[1]?.contentAr : item[1]?.contentEn">
+                                  <p class="font-14" [innerHTML]=" currentLang === 'ar' ? item[1]?.contentAr.slice(0,200) : item[1]?.contentEn.slice(0,200)" style="height: 150px;">
                                   </p>
       
                                   <div class="d-flex justify-content-start gap-3">
-                                      <button class="btn btn-cyan">
+                                      <button class="btn btn-cyan" (click)="goDetails('/Main/ServiceDetail/' + item[1]?.nameAlias)">
                                           More...
                                       </button>
                                       <button (click)="selectCurrentItem(item[1],'service')"class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -298,9 +298,13 @@
                           <textarea
                             id="message"
                             formControlName="message"
+                            [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['message'].invalid }"
                             class="form-control"
                             rows="3"
                           ></textarea>
+                          <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['message'].invalid">
+                            Message name is required.
+                          </div>
                         </div>
                       </div>
                       <div class="justify-content-center d-flex">

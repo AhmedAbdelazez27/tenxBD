@@ -61,9 +61,13 @@ export class LandingService {
   getProjectDetails(tenancyName:string,aliasName:string): Observable<any>{
     return this.http.get<any>(`${this.baseUrl}CrmProjects/GetByNameAlias?TenancyName=${tenancyName}&NameAlias=${aliasName}`)
   }
-
-
-
+ 
+  getProductDetails(tenancyName:string,aliasName:string): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}CrmProducts/GetByNameAlias?TenancyName=${tenancyName}&NameAlias=${aliasName}`)
+  }
+  getServiceDetails(tenancyName:string,aliasName:string): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}CrmServices/GetByNameAlias?TenancyName=${tenancyName}&NameAlias=${aliasName}`)
+  }
 
 
 

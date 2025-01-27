@@ -1,5 +1,25 @@
 {
-  "REQUEST_SEND_SUCCESS": "Request Sended Successfully",
+  "REQUEST_SEND_SUCCESS": "Your Request Sended Successfully",
   "REQUEST_SEND_FAILED": "Request Send Failed",
-  "CLOSE": "Close"
+  "CLOSE": "Close",
+  "requestService": {
+    "title": "Request Service",
+    "titleProject": "Request Project",
+    "titleProduct": "Request Product",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "companyName": "Company Name",
+      "notes": "Notes"
+    },
+    "errors": {
+      "required": "is required",
+      "invalidEmail": "Valid email is required"
+    },
+    "buttons": {
+      "sendRequest": "Send Request",
+      "cancel": "Cancel"
+    }
+  }
 }

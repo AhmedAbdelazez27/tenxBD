@@ -1,5 +1,25 @@
 {
   "REQUEST_SEND_SUCCESS": "تم ارسال طلبك بنجاح",
   "REQUEST_SEND_FAILED": "لم يتم ارسال طلبك",
-  "CLOSE": "اغلاق"
+  "CLOSE": "اغلاق",
+  "requestService": {
+    "title": "طلب خدمة",
+    "titleProject": "طلب مشروع",
+    "titleProduct": "طلب منتج",
+    "form": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "companyName": "اسم الشركة",
+      "notes": "ملاحظات"
+    },
+    "errors": {
+      "required": "مطلوب",
+      "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح"
+    },
+    "buttons": {
+      "sendRequest": "إرسال الطلب",
+      "cancel": "إلغاء"
+    }
+  }
 }

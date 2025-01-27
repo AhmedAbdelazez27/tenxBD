@@ -10,14 +10,14 @@ import { SpinnerService } from '../../../../../../shared/services/spinner.servic
 import { DialogModule } from 'primeng/dialog';
 
 @Component({
-  selector: 'app-project-inner',
+  selector: 'app-product-inner',
   standalone: true,
-  imports: [CommonModule, ToastModule, FormsModule, ReactiveFormsModule,TranslateModule,RouterModule,DialogModule],
-  templateUrl: './project-inner.component.html',
-  styleUrl: './project-inner.component.scss',
-  providers: [MessageService]
+  imports: [CommonModule, ToastModule, FormsModule, ReactiveFormsModule,TranslateModule,RouterModule,DialogModule],  
+  templateUrl: './product-inner.component.html',
+  styleUrl: './product-inner.component.scss',
+    providers: [MessageService]
 })
-export class ProjectInnerComponent implements OnInit{
+export class ProductInnerComponent implements OnInit{
   requestForm: FormGroup;
   tenancyName: string;
   item: any;
@@ -51,9 +51,9 @@ export class ProjectInnerComponent implements OnInit{
         mobileNo: ['', Validators.required],
         companyName: ['', Validators.required],
         notes: [''],
-        requestBDTypeLkpId: [41893],
+        requestBDTypeLkpId: [41891],
         crmServiceId: [null],
-        crmProjectId: [41893],
+        crmProjectId: [null],
         crmProductId: [null],
         // tenancyName :[ this.tenancyName]
         tenancyName :[ 'Propertyuae']
@@ -76,13 +76,13 @@ export class ProjectInnerComponent implements OnInit{
   }
   getItemDetails(eliasName:any){
     this._SpinnerService.showSpinner();
-    this.landingService.getProjectDetails("Propertyuae",eliasName).subscribe({
+    this.landingService.getProductDetails("Propertyuae",eliasName).subscribe({
       next: (res)=>{
         console.log(res);
         
         this.item = res.result;
         this.requestForm.patchValue({
-          crmProjectId : this.item?.id
+          crmProductId : this.item?.id
         })
         this._SpinnerService.hideSpinner();
       },

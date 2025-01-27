@@ -29,7 +29,7 @@
             </div>
             <div class="col-xl-12 p-0">
                 <div class="back-white p-4 h-100 w-100 radius-bottom">
-                    <h2 class="blue">{{ currentLang === 'ar' ? item?.projectNameAr : item?.projectNameEn }}</h2>
+                    <h2 class="blue">{{ currentLang === 'ar' ? item?.serviceNameAr : item?.serviceNameEn }}</h2>
                     <p class="text-justify" [innerHTML]="currentLang === 'ar' ? item?.contentAr : item?.contentEn">
                     </p>
                 </div>
@@ -41,7 +41,7 @@
 
 <section style="margin-top: 64px;">
   <div class="container back-white radius p-4">
-    <h2 class="blue mb-3">{{ 'requestService.titleProject' | translate }}</h2>
+    <h2 class="blue mb-3">{{ 'requestService.title' | translate }}</h2>
     <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-xl-6">

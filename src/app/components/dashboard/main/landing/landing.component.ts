@@ -60,7 +60,7 @@ navLinks = [
   contactForm: FormGroup;
   isSubmittedContact:boolean = false;
   tenancyName: string;
-
+  logoImg: string='';
 
   constructor(
     private landingService: LandingService,
@@ -176,6 +176,7 @@ navLinks = [
         instagramLink: data[0]?.instagramLink,
         facebookLink: data[0]?.facebookLink
       }
+      this.logoImg =  data[0]?.filepath ;
       console.log(this.sliderData);
       
     });
@@ -215,18 +216,6 @@ navLinks = [
     }, 200);
     console.log(this.inputValueFast);
 
-  }
-  gettingSliderData() {
-    this._SpinnerService.showSpinner();
-    this.landingService.getSlider().subscribe({
-      next: (res) => {
-        this.sliderItems = res.result.filter((item: { isActive: any; }) => item.isActive);
-        this._SpinnerService.hideSpinner();
-      },
-      error: (err) => {
-        
-      }
-    })
   }
 
   gettingProducts() {
@@ -309,7 +298,6 @@ navLinks = [
   };
 
   goDetails(route: string) {
-
     this.router.navigate([`${route}`]);
   };
 
@@ -397,13 +385,14 @@ navLinks = [
       this._SpinnerService.showSpinner();
       const finalData = {
         ...this.contactForm.value,
-        tenancyName :this.tenancyName,
+        tenancyName :'Propertyuae',
       }
  
       this.landingService.submitRequestContact(finalData).subscribe( {
         next : response =>{
           this.showSuccess();
           this._SpinnerService.hideSpinner();
+          this.contactForm.reset();
           console.log('Form submitted successfully:', response);
         },
         error : err=>{
@@ -413,7 +402,7 @@ navLinks = [
         }
       });
     } else {
-      this.handleFailure();
+      // this.handleFailure();
       console.warn('Form is invalid');
     }
   }

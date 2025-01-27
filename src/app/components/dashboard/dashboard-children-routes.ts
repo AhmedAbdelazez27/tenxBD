@@ -1,6 +1,8 @@
 import { aboutChildrenRoutes } from "./main/about/about-children-routes";
 import { authChildrenRoutes } from "./main/auth/auth-children-routes";
+import { ProductInnerComponent } from "./main/landing/inner-pages/product-inner/product-inner.component";
 import { ProjectInnerComponent } from "./main/landing/inner-pages/project-inner/project-inner.component";
+import { ServiceInnerComponent } from "./main/landing/inner-pages/service-inner/service-inner.component";
 import { LandingComponent } from "./main/landing/landing.component";
 
 export const dashBoardChildrenRoutes: any[] = [
@@ -29,6 +31,16 @@ export const dashBoardChildrenRoutes: any[] = [
   {
     path: 'ProjectDetail/:itemAliasName',
     component: ProjectInnerComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'ServiceDetail/:itemAliasName',
+    component: ServiceInnerComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'ProductDetail/:itemAliasName',
+    component: ProductInnerComponent,
     pathMatch: 'full'
   },
   // Errors
