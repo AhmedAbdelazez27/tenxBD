@@ -8,6 +8,7 @@ import { ToastModule } from 'primeng/toast';
 import { LandingService } from '../../../servicesApi/landing.service';
 import { SpinnerService } from '../../../../../../shared/services/spinner.service';
 import { DialogModule } from 'primeng/dialog';
+import { TranslationService } from '../../../../../../shared/services/translation.service';
 
 @Component({
   selector: 'app-product-inner',
@@ -25,6 +26,7 @@ export class ProductInnerComponent implements OnInit{
   isSubmitted: boolean = false;
   displayDialog: boolean =false;
   logoImg: any;
+  isRtl = false; // Default to LTR (English)
 
   constructor(
      private landingService: LandingService,
@@ -34,6 +36,7 @@ export class ProductInnerComponent implements OnInit{
         private translate: TranslateService,
         private route: ActivatedRoute,
         private fb: FormBuilder,
+        private translationService: TranslationService
   ){
     
     let hostname = window.location.hostname;
@@ -60,6 +63,9 @@ export class ProductInnerComponent implements OnInit{
       });
 
       this.currentLang = this.translate.currentLang || this.translate.defaultLang;
+      console.log(this.currentLang);
+      this.isRtl =this.currentLang == 'ar' ? true :false ;
+      
   }
 
   ngOnInit(): void {
@@ -74,6 +80,12 @@ export class ProductInnerComponent implements OnInit{
       this.logoImg =  res[0]?.filepath ;
     })
   }
+
+  switchLanguage(lang: string) {
+    this.translationService.changeLang(lang); // Call the translation service to change language
+    this.currentLang = lang; // Update current language to reflect in the dropdown
+  }
+
   getItemDetails(eliasName:any){
     this._SpinnerService.showSpinner();
     this.landingService.getProductDetails("Propertyuae",eliasName).subscribe({

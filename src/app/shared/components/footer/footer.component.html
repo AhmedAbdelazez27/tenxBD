@@ -3,45 +3,45 @@
         <div class="row">
             <div class="col-lg-3">
                 <h5 class=" footer-title mb-4">
-                    Links
+                    {{ 'Links' | translate }}
                 </h5>
                 <ul class="footer-ul">
                     <li>
                         <a href="#" class="">
-                            Home
+                            {{ 'Home' | translate }}
                         </a>
                     </li>
                     <li>
                         <a href="#" class="">
-                            About
+                            {{ 'About' | translate }}
                         </a>
                     </li>
                     <li>
                         <a href="#" class="">
-                            Products
+                            {{ 'Products' | translate }}
                         </a>
                     </li>
                     <li>
                         <a href="#" class="">
-                            Services
+                            {{ 'Services' | translate }}
                         </a>
                     </li>
                     <li>
                         <a href="#" class="">
-                            Projects
+                            {{ 'Projects' | translate }}
                         </a>
                     </li>
                     <li>
                         <a href="#" class="">
-                            Contact Us
+                            {{ 'Contact Us' | translate }}
                         </a>
                     </li>
                 </ul>
-
+                
             </div>
             <div class="col-lg-6">
                 <h5 class=" footer-title mb-4">
-                    Contacts Information
+                    {{ 'Contacts Information' | translate }}
                 </h5>
                 <div class="d-flex gap-3 mb-4">
                     <div class="footer-icon">
@@ -52,7 +52,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="mb-2 footer-ifo-label">Address</p>
+                        <p class="mb-2 footer-ifo-label">{{ 'Address' | translate }}</p>
                         <p class=" mb-0">{{currentLang === 'ar' ? socialLinks?.addressAr : socialLinks?.addressEn}}</p>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="mb-2 footer-ifo-label">Email</p>
+                        <p class="mb-2 footer-ifo-label">{{ 'Email' | translate }}</p>
                         <p class=" mb-0">{{socialLinks?.email}}</p>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="mb-2 footer-ifo-label">Phone</p>
+                        <p class="mb-2 footer-ifo-label">{{ 'Phone' | translate }}</p>
                         <p class=" mb-0">{{socialLinks?.tel}}</p>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
             </div>
             <div class="col-lg-3">
               <h5 class="footer-title mb-4">
-                Follow Us
+                {{ 'Follow Us' | translate }}
               </h5>
             
               <div *ngIf="socialLinks?.linkedInLink" class="d-flex gap-3 mb-4 align-items-center">
@@ -94,7 +94,7 @@
                     <img src="../../../../../assets/images/linkedin (1).png" alt="LinkedIn" />
                   </a>
                 </div>
-                <p class="mb-0">LinkedIn</p>
+                <p class="mb-0">{{ 'LinkedIn' | translate }}</p>
               </div>
             
               <div *ngIf="socialLinks?.instagramLink" class="d-flex gap-3 mb-4 align-items-center">
@@ -103,7 +103,7 @@
                     <img src="../../../../../assets/images/instagram (1).png" alt="Instagram" />
                   </a>
                 </div>
-                <p class="mb-0">Instagram</p>
+                <p class="mb-0"> {{ 'Instagram' | translate }}</p>
               </div>
             
               <div *ngIf="socialLinks?.facebookLink" class="d-flex gap-3 mb-4 align-items-center">
@@ -112,7 +112,7 @@
                     <img src="../../../../../assets/images/facebook.png" alt="Facebook" />
                   </a>
                 </div>
-                <p class="mb-0">Facebook</p>
+                <p class="mb-0">{{ 'Facebook' | translate }}</p>
               </div>
             </div>
             

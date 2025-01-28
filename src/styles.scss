@@ -1,3 +1,21 @@
+.btn-nav-cyan {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    padding: 13px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    background: var(--8-acde-0, #8ACDE0);
+    color: #fff;
+}
+
+.btn-nav-cyan:hover {
+    background: #6298a8;
+    color: #fff;
+}
 [dir="ltr"] {
 
   /* Primary and Secondary Colors */

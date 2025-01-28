@@ -1,25 +1,44 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top"  [attr.dir]="isRtl ? 'rtl' : 'ltr'">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" [routerLink]="['/Main/Home']">
                 <img *ngIf="logoImg" [src]="logoImg" style=" height: 80px;" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-4">
+                <ul class="navbar-nav mb-2 mb-lg-0 gap-4" [ngClass]="{'me-auto':currentLang == 'ar','ms-auto ':currentLang == 'en'}">
                     <li
                     class="nav-item"
                     *ngFor="let link of navLinks"
-                    
+                    style="cursor: pointer;"
 
                     (click)="scrollToSection(link.fragment)"
                   >
                     <a
                       class="nav-link"
                       [class.active]="currentSection === link.fragment"
-                      >{{ link.name }}</a
+                      >{{currentLang == 'en'? link.name : link?.nameAr }}</a
                     >
+                  </li>
+                  <li class="nav-item">
+                    <button *ngIf="currentLang == 'en'" class="btn btn-nav-cyan" (click)="switchLanguage('ar')">
+                      <span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="24" viewBox="0 0 18 24" fill="none">
+                              <path d="M17.3176 22.5848C16.4512 23.0084 15.4115 23.3454 14.1985 23.5957C12.9855 23.8652 11.6859 24 10.2996 24C8.35493 24 6.66059 23.7401 5.21655 23.2202C3.7725 22.7004 2.65578 21.9398 1.86637 20.9386C1.07696 19.9374 0.682251 18.7437 0.682251 17.3574C0.682251 14.9314 2.07816 12.8231 4.86998 11.0325C3.94579 10.2816 3.22377 9.43442 2.70391 8.49097C2.18406 7.52828 1.92413 6.55596 1.92413 5.57401C1.92413 4.41877 2.19368 3.41757 2.73279 2.5704C3.2719 1.72323 4.00355 1.08785 4.92774 0.66426C5.85193 0.22142 6.88201 0 8.01799 0C8.73039 0 9.46204 0.0866426 10.2129 0.259928C10.9831 0.413959 11.6377 0.616125 12.1768 0.866426L11.7725 3.89892L11.657 3.98556C10.4055 3.61974 9.42353 3.43682 8.71113 3.43682C7.8062 3.43682 7.13231 3.65824 6.68947 4.10108C6.24663 4.54392 6.02521 5.12154 6.02521 5.83393C6.02521 6.3923 6.1985 6.9988 6.54507 7.65343C6.91089 8.28881 7.41149 8.84717 8.04687 9.32852C9.47166 8.71239 11.089 8.13478 12.8989 7.59567L13.0721 7.65343L12.8122 11.4657C9.92413 12.0818 7.76769 12.8135 6.3429 13.6606C4.93737 14.5271 4.2346 15.5379 4.2346 16.6931C4.2346 17.4633 4.50415 18.1276 5.04326 18.6859C5.60163 19.2635 6.39104 19.7064 7.41149 20.0144C8.4512 20.3225 9.68346 20.4765 11.1082 20.4765C12.0517 20.4765 13.0048 20.4091 13.9675 20.2744C14.9494 20.1588 15.7966 19.9952 16.509 19.7834L16.7689 19.9278L17.3176 22.5848Z" fill="white" />
+                          </svg>
+                      </span>
+                  </button>
+                
+                
+                
+                  <button *ngIf="currentLang == 'ar'" class="btn btn-nav-cyan" (click)="switchLanguage('en')">
+                      <span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="24" viewBox="0 0 18 24" fill="none">
+                              <path d="M6.14818 19.7037H17.1111V24H0.888916V0H16.926V4.25926H6.14818V9.66667H15.4445L14.8519 13.8889H6.14818V19.7037Z" fill="white" />
+                          </svg>
+                      </span>
+                  </button>
                   </li>
                   </ul>
 
@@ -58,13 +77,13 @@
                 </div>
                 <div class="col-xl-6 p-0">
                     <div class="back-white p-4 h-100 w-100 radius-right">
-                        <h2 class="blue">About Us</h2>
+                        <h2 class="blue">{{ 'About Us' | translate }}</h2>
                         <p class="text-justify" [innerHTML]="currentLang === 'ar' ? aboutInfo?.contentAr : aboutInfo?.contentEn">
                             
                         </p>
 
                         <button class="btn btn-cyan" (click)="goDetails('/Main/AboutUs/General')">
-                            More...
+                          {{ 'More...' | translate }}
                         </button>
 
                     </div>
@@ -78,7 +97,7 @@
 
         <div class="container">
             <h2 class="text-center blue mb-4">
-                Our Products
+              {{ 'Our Products' | translate }}
             </h2>
 
             <ng-container *ngIf="customOptions && productsItems && productsItems.length > 0">
@@ -91,16 +110,15 @@
                                 <img [src]="product?.filepath" class="card-img-top" />
                                 <div class="card-body">
                                     <h5 class="card-title dark-blue">{{ currentLang === 'ar' ? product?.nameAr : product?.nameEn }}</h5>
-                                    <p class="font-14" [innerHTML]="currentLang === 'ar' ? product?.contentAr.slice(0,100) : product?.contentEn.slice(0,100)" style="height: 50px;">
-                                      {{product?.contentAr.length>100?'.....':''}}
+                                    <p class="font-14" [innerHTML]="currentLang === 'ar' ? product?.contentAr : product?.contentEn| truncateHtml:100" style="height: 50px;">
                                     </p>
     
                                     <div class="d-flex justify-content-start gap-3">
                                         <button class="btn btn-cyan"(click)="goDetails('/Main/ProductDetail/' + product?.nameAlias)">
-                                            More...
+                                          {{ 'More...' | translate }}
                                         </button>
-                                        <button (click)="selectCurrentItem(product,'product')" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            Request Product
+                                        <button (click)="selectCurrentItem(product,'product','Request Product')" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                          {{ 'Request Product' | translate }}
                                         </button>
                                     </div>
     
@@ -118,7 +136,7 @@
     <section id="services" class="pt-150 service-container">
         <div class="container">
             <h2 class="text-center white mb-4">
-                Our Services
+              {{ 'Our Services' | translate }}
             </h2>
             <ng-container *ngIf="customOptionsServices && services && services.length > 0">
               <owl-carousel-o [options]="customOptionsServices" >
@@ -137,10 +155,10 @@
       
                                   <div class="d-flex justify-content-start gap-3">
                                       <button class="btn btn-cyan" (click)="goDetails('/Main/ServiceDetail/' + item[0]?.nameAlias)">
-                                          More...
+                                        {{ 'More...' | translate }}
                                       </button>
-                                      <button (click)="selectCurrentItem(item[0],'service')" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                          Request Service
+                                      <button (click)="selectCurrentItem(item[0],'service','Request Service')" class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        {{ 'Request Service' | translate }}
                                       </button>
                                   </div>
                               </div>
@@ -156,10 +174,10 @@
       
                                   <div class="d-flex justify-content-start gap-3">
                                       <button class="btn btn-cyan" (click)="goDetails('/Main/ServiceDetail/' + item[1]?.nameAlias)">
-                                          More...
+                                        {{ 'More...' | translate }}
                                       </button>
-                                      <button (click)="selectCurrentItem(item[1],'service')"class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                          Request Service
+                                      <button (click)="selectCurrentItem(item[1],'service','Request Service')"class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        {{ 'Request Service' | translate }}
                                       </button>
                                   </div>
                               </div>
@@ -179,9 +197,9 @@
             <div class="row">
                 <div class="col-xl-12 mb-4">
                     <div class="back-white radius p-4 h-100">
-                        <h2 class="blue mb-3">Our Projects</h2>
-                        <p class="mb-0">
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose
+                        <h2 class="blue mb-3">{{ 'Our Projects' | translate }}</h2>
+                        <p class="mb-0" [innerHTML]="currentLang === 'ar' ? projectsBriefAr : projectsBrief">
+                            
 
 
                         </p>
@@ -204,10 +222,10 @@
       
                                       <div class="d-flex justify-content-start gap-2">
                                           <button class="btn btn-cyan btn-small" (click)="goDetails('/Main/ProjectDetail/' + project.nameAlias)">
-                                              More...
+                                            {{ 'More...' | translate }}
                                           </button>
-                                          <button (click)="selectCurrentItem(project , 'project')" class="btn btn-blue btn-small" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                              Request Project
+                                          <button (click)="selectCurrentItem(project , 'project','Request Project')" class="btn btn-blue btn-small" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            {{ 'Request Project' | translate }}
                                           </button>
                                           
                                       </div>
@@ -226,93 +244,91 @@
     <section id="contact" class="pt-150 ">
         <div class="contact-form">
             <div class="container">
-                <h2 class="blue mb-3">Contact Us</h2>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing </p>
-
+                <h2 class="blue mb-3">{{'Contact Us'|translate}}</h2>
+                <p [innerHTML]="currentLang === 'ar' ? contactUsBriefAr : contactUsBrief"></p>
                 <form [formGroup]="contactForm" (ngSubmit)="onSubmitContact()">
-                    <div class="row">
-                      <div class="col-xl-6">
-                        <div class="mb-3">
-                          <label for="name" class="form-label">Name</label>
-                          <input
-                            type="text"
-                            id="name"
-                            formControlName="name"
-                            class="form-control"
-                            [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['name'].invalid }"
-                          />
-                          <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['name'].invalid">
-                            Name is required.
-                          </div>
+                  <div class="row">
+                    <div class="col-xl-6">
+                      <div class="mb-3">
+                        <label for="name" class="form-label">{{ 'Name' | translate }}</label>
+                        <input
+                          type="text"
+                          id="name"
+                          formControlName="name"
+                          class="form-control"
+                          [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['name'].invalid }"
+                        />
+                        <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['name'].invalid">
+                          {{ 'Name is required.' | translate }}
                         </div>
-                      </div>
-                      <div class="col-xl-6">
-                        <div class="mb-3">
-                          <label for="email" class="form-label">Email</label>
-                          <input
-                            type="email"
-                            id="email"
-                            formControlName="email"
-                            class="form-control"
-                            [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['email'].invalid }"
-                          />
-                          <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['email'].invalid">
-                            Valid email is required.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-6">
-                        <div class="mb-3">
-                          <label for="phone1" class="form-label">Phone Number</label>
-                          <input
-                            type="tel"
-                            id="phone1"
-                            formControlName="phone1"
-                            class="form-control"
-                            [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['phone1'].invalid }"
-                          />
-                          <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['phone1'].invalid">
-                            Phone number is required.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-6">
-                        <div class="mb-3">
-                          <label for="companyName" class="form-label">Company Name</label>
-                          <input
-                            type="text"
-                            id="companyName"
-                            formControlName="companyName"
-                            class="form-control"
-                            [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['companyName'].invalid }"
-                          />
-                          <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['companyName'].invalid">
-                            Company name is required.
-                          </div>
-                        </div>
-                      </div>
-                  
-                      <div class="col-xl-12">
-                        <div class="mb-3">
-                          <label for="message" class="form-label">Message</label>
-                          <textarea
-                            id="message"
-                            formControlName="message"
-                            [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['message'].invalid }"
-                            class="form-control"
-                            rows="3"
-                          ></textarea>
-                          <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['message'].invalid">
-                            Message name is required.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="justify-content-center d-flex">
-                        <button type="submit" class="btn btn-cyan btn-wide">Send</button>
                       </div>
                     </div>
-                  </form>
-                  
+                    <div class="col-xl-6">
+                      <div class="mb-3">
+                        <label for="email" class="form-label">{{ 'Email' | translate }}</label>
+                        <input
+                          type="email"
+                          id="email"
+                          formControlName="email"
+                          class="form-control"
+                          [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['email'].invalid }"
+                        />
+                        <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['email'].invalid">
+                          {{ 'Valid email is required.' | translate }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6">
+                      <div class="mb-3">
+                        <label for="phone1" class="form-label">{{ 'Phone Number' | translate }}</label>
+                        <input
+                          type="tel"
+                          id="phone1"
+                          formControlName="phone1"
+                          class="form-control"
+                          [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['phone1'].invalid }"
+                        />
+                        <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['phone1'].invalid">
+                          {{ 'Phone number is required.' | translate }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6">
+                      <div class="mb-3">
+                        <label for="companyName" class="form-label">{{ 'Company Name' | translate }}</label>
+                        <input
+                          type="text"
+                          id="companyName"
+                          formControlName="companyName"
+                          class="form-control"
+                          [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['companyName'].invalid }"
+                        />
+                        <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['companyName'].invalid">
+                          {{ 'Company name is required.' | translate }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-12">
+                      <div class="mb-3">
+                        <label for="message" class="form-label">{{ 'Message' | translate }}</label>
+                        <textarea
+                          id="message"
+                          formControlName="message"
+                          [ngClass]="{ 'is-invalid': isSubmittedContact && contactForm.controls['message'].invalid }"
+                          class="form-control"
+                          rows="3"
+                        ></textarea>
+                        <div class="invalid-feedback" *ngIf="isSubmittedContact && contactForm.controls['message'].invalid">
+                          {{ 'Message is required.' | translate }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="justify-content-center d-flex">
+                      <button type="submit" class="btn btn-cyan btn-wide">{{ 'Send' | translate }}</button>
+                    </div>
+                  </div>
+                </form>
+                
 
             </div>
         </div>
@@ -335,91 +351,92 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5 blue" id="exampleModalLabel">Request Service</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header" style="display: block !important; width:100%">
+                  <button type="button" class="btn-close flex-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <h1 class="modal-title fs-5 blue" id="exampleModalLabel">{{titleModal |translate}}</h1>
                 </div>
                 <div class="modal-body">
-                    <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
-                        <div class="row">
-                          <div class="col-xl-6">
-                            <div class="mb-3">
-                              <label for="requesterName" class="form-label">Name</label>
-                              <input
-                                type="text"
-                                id="requesterName"
-                                formControlName="requesterName"
-                                class="form-control"
-                                [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['requesterName'].invalid}"
-                              />
-                              <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['requesterName'].invalid">
-                                Name is required.
-                              </div>
-                            </div>
+                  <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                      <div class="col-xl-6">
+                        <div class="mb-3">
+                          <label for="requesterName" class="form-label">{{ 'Name' | translate }}</label>
+                          <input
+                            type="text"
+                            id="requesterName"
+                            formControlName="requesterName"
+                            class="form-control"
+                            [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['requesterName'].invalid}"
+                          />
+                          <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['requesterName'].invalid">
+                            {{ 'Name is required.' | translate }}
                           </div>
-                          <div class="col-xl-6">
-                            <div class="mb-3">
-                              <label for="email" class="form-label">Email</label>
-                              <input
-                                type="email"
-                                id="email"
-                                formControlName="email"
-                                class="form-control"
-                                [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['email'].invalid}"
-                              />
-                              <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['email'].invalid">
-                                Valid email is required.
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-xl-6">
-                            <div class="mb-3">
-                              <label for="mobileNo" class="form-label">Phone Number</label>
-                              <input
-                                type="tel"
-                                id="mobileNo"
-                                formControlName="mobileNo"
-                                class="form-control"
-                                [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['mobileNo'].invalid}"
-                              />
-                              <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['mobileNo'].invalid">
-                                Phone number is required.
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-xl-6">
-                            <div class="mb-3">
-                              <label for="companyName" class="form-label">Company Name</label>
-                              <input
-                                type="text"
-                                id="companyName"
-                                formControlName="companyName"
-                                class="form-control"
-                                [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['companyName'].invalid}"
-                              />
-                              <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['companyName'].invalid">
-                                Company name is required.
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-xl-12">
-                            <div class="mb-3">
-                              <label for="notes" class="form-label">Notes</label>
-                              <textarea
-                                id="notes"
-                                formControlName="notes"
-                                class="form-control"
-                              ></textarea>
-                            </div>
-                          </div>
-                          <div class="d-flex justify-content-center gap-3">
-                            <button type="submit" class="btn btn-cyan">Send Request</button>
-                            <button type="button" class="btn btn-blue" data-bs-dismiss="modal">Cancel</button>
-                            <!-- Hidden close button -->
-                            <button id="hiddenCloseBtn" type="button" class="d-none" data-bs-dismiss="modal"></button>
                         </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="mb-3">
+                          <label for="email" class="form-label">{{ 'Email' | translate }}</label>
+                          <input
+                            type="email"
+                            id="email"
+                            formControlName="email"
+                            class="form-control"
+                            [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['email'].invalid}"
+                          />
+                          <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['email'].invalid">
+                            {{ 'Valid email is required.' | translate }}
+                          </div>
                         </div>
-                      </form>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="mb-3">
+                          <label for="mobileNo" class="form-label">{{ 'Phone Number' | translate }}</label>
+                          <input
+                            type="tel"
+                            id="mobileNo"
+                            formControlName="mobileNo"
+                            class="form-control"
+                            [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['mobileNo'].invalid}"
+                          />
+                          <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['mobileNo'].invalid">
+                            {{ 'Phone number is required.' | translate }}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="mb-3">
+                          <label for="companyName" class="form-label">{{ 'Company Name' | translate }}</label>
+                          <input
+                            type="text"
+                            id="companyName"
+                            formControlName="companyName"
+                            class="form-control"
+                            [ngClass]="{'is-invalid': isSubmitted && requestForm.controls['companyName'].invalid}"
+                          />
+                          <div class="invalid-feedback" *ngIf="isSubmitted && requestForm.controls['companyName'].invalid">
+                            {{ 'Company name is required.' | translate }}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-12">
+                        <div class="mb-3">
+                          <label for="notes" class="form-label">{{ 'Notes' | translate }}</label>
+                          <textarea
+                            id="notes"
+                            formControlName="notes"
+                            class="form-control"
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-center gap-3">
+                        <button type="submit" class="btn btn-cyan">{{ 'Send Request' | translate }}</button>
+                        <button type="button" class="btn btn-blue" data-bs-dismiss="modal">{{ 'Cancel' | translate }}</button>
+                        <!-- Hidden close button -->
+                        <button id="hiddenCloseBtn" type="button" class="d-none" data-bs-dismiss="modal"></button>
+                      </div>
+                    </div>
+                  </form>
+                  
                       
                 </div>
                

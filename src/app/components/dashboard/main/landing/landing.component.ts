@@ -9,12 +9,14 @@ import { ToastModule } from 'primeng/toast';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartService } from '../../../../shared/services/cart.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslationService } from '../../../../shared/services/translation.service';
+import { TruncateHtmlPipe } from '../../../../truncate-html.pipe';
 
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, CarouselModule, ToastModule, FormsModule, ReactiveFormsModule,TranslateModule,RouterModule],
+  imports: [CommonModule, CarouselModule, ToastModule, FormsModule, ReactiveFormsModule,TranslateModule,RouterModule,TruncateHtmlPipe],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
   providers: [MessageService]
@@ -43,14 +45,14 @@ export class LandingComponent implements OnInit {
   
   currentSection: string = 'slider';
 
-navLinks = [
-  { name: 'Home', fragment: 'slider' },
-  { name: 'About', fragment: 'about' },
-  { name: 'Products', fragment: 'products' },
-  { name: 'Services', fragment: 'services' },
-  { name: 'Projects', fragment: 'projects' },
-  { name: 'Contact', fragment: 'contact' },
-];
+  navLinks = [
+    { name: 'Home', nameAr: 'الرئيسية', fragment: 'slider' },
+    { name: 'About', nameAr: 'من نحن', fragment: 'about' },
+    { name: 'Products', nameAr: 'المنتجات', fragment: 'products' },
+    { name: 'Services', nameAr: 'الخدمات', fragment: 'services' },
+    { name: 'Projects', nameAr: 'المشاريع', fragment: 'projects' },
+    { name: 'Contact', nameAr: 'تواصل معنا', fragment: 'contact' },
+  ];
   productsItems: any[]=[];
   services: any[]=[];
   aboutInfo:any;
@@ -61,6 +63,12 @@ navLinks = [
   isSubmittedContact:boolean = false;
   tenancyName: string;
   logoImg: string='';
+  isRtl : boolean=false;
+  contactUsBrief: any;
+  projectsBrief: any;
+  contactUsBriefAr: any;
+  projectsBriefAr: any;
+  titleModal: string='';
 
   constructor(
     private landingService: LandingService,
@@ -71,6 +79,7 @@ navLinks = [
     private translate: TranslateService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    private translationService: TranslationService
   ) {
     this.requestForm = this.fb.group({
       requesterName: ['', Validators.required],
@@ -100,6 +109,7 @@ navLinks = [
         dots: false,
         autoplay: true,
         autoplayTimeout: 3000,
+        autoplayHoverPause: true,
         responsive: {
           0: { items: 1 },
           600: { items: 1},
@@ -120,6 +130,7 @@ navLinks = [
         dots: false,
         autoplay: true,
         autoplayTimeout: 3000,
+        autoplayHoverPause: true,
         responsive: {
           0: {
             items: 1,
@@ -150,6 +161,7 @@ navLinks = [
        };
     }
     this.currentLang = this.translate.currentLang || this.translate.defaultLang;
+    this.isRtl =this.currentLang == 'ar' ? true :false ;
     console.log(this.currentLang);
 
     let hostname = window.location.hostname;
@@ -177,11 +189,19 @@ navLinks = [
         facebookLink: data[0]?.facebookLink
       }
       this.logoImg =  data[0]?.filepath ;
+      this.contactUsBrief =  data[0]?.contactUsBrief ;
+      this.contactUsBriefAr =  data[0]?.contactUsBriefAr ;
+      this.projectsBrief =  data[0]?.projectsBrief ;
+      this.projectsBriefAr =  data[0]?.projectsBriefAr ;
       console.log(this.sliderData);
       
     });
   }
 
+  switchLanguage(lang: string) {
+    this.translationService.changeLang(lang); // Call the translation service to change language
+    this.currentLang = lang; // Update current language to reflect in the dropdown
+  }
   scrollToSection(sectionId: string) {
     const sections = document.querySelectorAll('div[id^="section"]');
     sections.forEach(section => section.classList.remove('active-section'));
@@ -237,6 +257,7 @@ navLinks = [
       }
     })
   }
+
   animatedValues: number[] = []; // Array to store animated values
   getAllWebService() {
     this.landingService.getServices('Propertyuae').subscribe({
@@ -301,7 +322,7 @@ navLinks = [
     this.router.navigate([`${route}`]);
   };
 
-  selectCurrentItem(item: any,typeV?: string) {
+  selectCurrentItem(item: any,typeV?: string,titleModal:string="") {
     console.log(item);
     this.requestBDTypeLkpId = typeV === 'product' 
     ? 41891 
@@ -310,7 +331,8 @@ navLinks = [
     : typeV === 'project' 
     ? 41893 
     : null;
-    this.currentItemCart = { ...item, typeV }
+    this.currentItemCart = { ...item, typeV };
+    this.titleModal = titleModal
   } 
 
   showSuccess() {  
@@ -393,6 +415,7 @@ navLinks = [
           this.showSuccess();
           this._SpinnerService.hideSpinner();
           this.contactForm.reset();
+          this.isSubmittedContact = false;
           console.log('Form submitted successfully:', response);
         },
         error : err=>{
