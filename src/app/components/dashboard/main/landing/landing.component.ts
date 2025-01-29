@@ -252,6 +252,8 @@ export class LandingComponent implements OnInit {
     this.landingService.getProjects('Propertyuae').subscribe({
       next: (res) => {
         this.projects = res.result;
+        console.log("this.projects ",this.projects);
+        
       },
       error: (err) => {
       }
