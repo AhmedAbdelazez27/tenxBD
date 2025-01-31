@@ -60,7 +60,7 @@
             <div class="col-xl-6 p-0">
                 <div class="back-white p-4 h-100 w-100 radius-right">
                     <h2 class="blue">{{ currentLang === 'ar' ? item?.productNameAr : item?.productNameEn }}</h2>
-                    <p class="text-justify" [innerHTML]="currentLang === 'ar' ? item?.contentAr.slice(0,300) : item?.contentEn.slice(0,300)">
+                    <p class="text-justify" [innerHTML]="currentLang === 'ar' ? item?.contentAr : item?.contentEn">
                     </p>
 
                 </div>

@@ -59,7 +59,7 @@ export class ServiceInnerComponent implements OnInit{
         crmProjectId: [null],
         crmProductId: [null],
         // tenancyName :[ this.tenancyName]
-        tenancyName :[ 'Propertyuae']
+        tenancyName :[ this.tenancyName]
       });
 
       this.currentLang = this.translate.currentLang || this.translate.defaultLang;
@@ -84,7 +84,7 @@ export class ServiceInnerComponent implements OnInit{
   }
   getItemDetails(eliasName:any){
     this._SpinnerService.showSpinner();
-    this.landingService.getServiceDetails("Propertyuae",eliasName).subscribe({
+    this.landingService.getServiceDetails(this.tenancyName,eliasName).subscribe({
       next: (res)=>{
         console.log(res);
         

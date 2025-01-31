@@ -26,6 +26,7 @@ export class GeneralComponent implements OnInit{
   teams:any;
   logoImg: any;
   isRtl : boolean=false;
+  tenancyName: string;
 
   constructor(
     private _AboutusService:AboutusService,
@@ -82,7 +83,16 @@ export class GeneralComponent implements OnInit{
           },
         },
        };
+    };
+
+    let hostname = window.location.hostname;
+    if (hostname.includes('localhost')) {
+      this.tenancyName = 'Propertyuae';
+    } else {
+      this.tenancyName = hostname.split(".")[0]; 
     }
+
+
   }
 
   ngOnInit(): void {
@@ -98,28 +108,9 @@ export class GeneralComponent implements OnInit{
     this.translationService.changeLang(lang); // Call the translation service to change language
     this.currentLang = lang; // Update current language to reflect in the dropdown
   }
-  gettingAboutInfo(){
-    console.log("test");
-    
-    this._SpinnerService.showSpinner();
-    this._AboutusService.aboutGeneralInfo().subscribe({
-      next : (res)=>{
-        console.log(res);
-        
-        console.log(res.result[0]);
-        this.websiteAboutUs = res.result[0]?.websiteAboutUs;
-        this.listWebsiteAboutUsBranchs = res.result[0]?.listWebsiteAboutUsBranchs;
-        this.listWebsiteAboutUsDept = [...res.result[0]?.listWebsiteAboutUsDept];
-        this._SpinnerService.hideSpinner();
-      },
-      error : (err)=>{
-        this._SpinnerService.hideSpinner();
-      }
-    })
-  }
 
   getAllWebsiteAbout() {
-    this.landingService.getAllWebsiteAbout('Propertyuae').subscribe({
+    this.landingService.getAllWebsiteAbout(this.tenancyName).subscribe({
       next: (res) => {
         console.log(res);
         

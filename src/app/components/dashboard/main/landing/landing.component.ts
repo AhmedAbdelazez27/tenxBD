@@ -7,7 +7,6 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CartService } from '../../../../shared/services/cart.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslationService } from '../../../../shared/services/translation.service';
 import { TruncateHtmlPipe } from '../../../../truncate-html.pipe';
@@ -75,9 +74,7 @@ export class LandingComponent implements OnInit {
     private _SpinnerService: SpinnerService,
     private router: Router,
     private messageService: MessageService,
-    private cartService: CartService,
     private translate: TranslateService,
-    private route: ActivatedRoute,
     private fb: FormBuilder,
     private translationService: TranslationService
   ) {
@@ -239,7 +236,7 @@ export class LandingComponent implements OnInit {
   }
 
   gettingProducts() {
-    this.landingService.getProducts("Propertyuae").subscribe({
+    this.landingService.getProducts(this.tenancyName).subscribe({
       next: (res) => {
         this.productsItems = res.result.filter((item: { isActive: any; }) => item.isActive);
       },
@@ -249,7 +246,7 @@ export class LandingComponent implements OnInit {
   }
 
   getListProjects() {
-    this.landingService.getProjects('Propertyuae').subscribe({
+    this.landingService.getProjects(this.tenancyName).subscribe({
       next: (res) => {
         this.projects = res.result;
         console.log("this.projects ",this.projects);
@@ -262,7 +259,7 @@ export class LandingComponent implements OnInit {
 
   animatedValues: number[] = []; // Array to store animated values
   getAllWebService() {
-    this.landingService.getServices('Propertyuae').subscribe({
+    this.landingService.getServices(this.tenancyName).subscribe({
       next: (res:any) => {
         let baseServices = [...res.result];
         
@@ -303,22 +300,13 @@ export class LandingComponent implements OnInit {
   };
 
   getAllWebsiteAbout() {
-    this.landingService.getAllWebsiteAbout('Propertyuae').subscribe({
+    this.landingService.getAllWebsiteAbout(this.tenancyName).subscribe({
       next: (res) => {
         this.aboutInfo = res.result[0];
       }
     })
   };
 
-  getAllPartnersForWebsite() {
-    this.landingService.getAllPartnersForWebsite().subscribe({
-      next: (res) => {
-        this.partners = res.result;
-        console.log(this.partners);
-        
-      }
-    })
-  };
 
   goDetails(route: string) {
     this.router.navigate([`${route}`]);
@@ -409,7 +397,7 @@ export class LandingComponent implements OnInit {
       this._SpinnerService.showSpinner();
       const finalData = {
         ...this.contactForm.value,
-        tenancyName :'Propertyuae',
+        tenancyName :this.tenancyName,
       }
  
       this.landingService.submitRequestContact(finalData).subscribe( {

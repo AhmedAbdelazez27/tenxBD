@@ -1,7 +1,6 @@
 import { Component, OnInit, Renderer2, RendererFactory2, RendererStyleFlags2 } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { CartService } from './shared/services/cart.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LandingService } from './components/dashboard/main/servicesApi/landing.service';
 import { SpinnerService } from './shared/services/spinner.service';
@@ -16,7 +15,6 @@ import { SpinnerService } from './shared/services/spinner.service';
 export class AppComponent implements OnInit{
   private renderer: Renderer2;
   constructor(
-    private cartService: CartService,
     private translate: TranslateService,
     private landingService:LandingService,
     private _SpinnerService: SpinnerService,

@@ -58,8 +58,7 @@ export class ProjectInnerComponent implements OnInit{
         crmServiceId: [null],
         crmProjectId: [41893],
         crmProductId: [null],
-        // tenancyName :[ this.tenancyName]
-        tenancyName :[ 'Propertyuae']
+        tenancyName :[ this.tenancyName]
       });
 
       this.currentLang = this.translate.currentLang || this.translate.defaultLang;
@@ -69,7 +68,6 @@ export class ProjectInnerComponent implements OnInit{
   ngOnInit(): void {
     this.route.params.subscribe((params: { [x: string]: any; }) => {
       let id = params['itemAliasName']; // Access visitId from the URL
-      console.log("iidd = ",id,params);
       
       this.getItemDetails(id);
 
@@ -84,7 +82,7 @@ export class ProjectInnerComponent implements OnInit{
   }
   getItemDetails(eliasName:any){
     this._SpinnerService.showSpinner();
-    this.landingService.getProjectDetails("Propertyuae",eliasName).subscribe({
+    this.landingService.getProjectDetails(this.tenancyName,eliasName).subscribe({
       next: (res)=>{
         console.log(res);
         

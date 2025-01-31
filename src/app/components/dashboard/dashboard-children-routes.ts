@@ -1,5 +1,4 @@
 import { aboutChildrenRoutes } from "./main/about/about-children-routes";
-import { authChildrenRoutes } from "./main/auth/auth-children-routes";
 import { ProductInnerComponent } from "./main/landing/inner-pages/product-inner/product-inner.component";
 import { ProjectInnerComponent } from "./main/landing/inner-pages/project-inner/project-inner.component";
 import { ServiceInnerComponent } from "./main/landing/inner-pages/service-inner/service-inner.component";
@@ -19,14 +18,6 @@ export const dashBoardChildrenRoutes: any[] = [
         c.AboutComponent
       ),
       children: aboutChildrenRoutes 
-  },
-  {
-    path: 'Auth',
-    loadComponent: ()=>
-      import('./main/auth/auth.component').then((c)=>
-        c.AuthComponent
-      ),
-      children: authChildrenRoutes 
   },
   {
     path: 'ProjectDetail/:itemAliasName',

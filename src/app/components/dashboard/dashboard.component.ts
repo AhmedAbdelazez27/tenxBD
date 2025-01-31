@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavBarComponent } from '../../shared/components/nav-bar/nav-bar.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
@@ -19,7 +18,6 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    NavBarComponent,
     DropdownModule,
     DialogModule,
     FooterComponent
