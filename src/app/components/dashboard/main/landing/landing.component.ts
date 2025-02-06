@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslationService } from '../../../../shared/services/translation.service';
 import { TruncateHtmlPipe } from '../../../../truncate-html.pipe';
+import { GlobalConfigService } from '../../../../shared/services/shared/services/global-config.service';
 
 
 @Component({
@@ -68,6 +69,7 @@ export class LandingComponent implements OnInit {
   contactUsBriefAr: any;
   projectsBriefAr: any;
   titleModal: string='';
+  logoFullUrl: string;
 
   constructor(
     private landingService: LandingService,
@@ -76,8 +78,10 @@ export class LandingComponent implements OnInit {
     private messageService: MessageService,
     private translate: TranslateService,
     private fb: FormBuilder,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private configService: GlobalConfigService
   ) {
+    this.logoFullUrl = this.configService.baseUrl || "";
     this.requestForm = this.fb.group({
       requesterName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -163,7 +167,7 @@ export class LandingComponent implements OnInit {
 
     let hostname = window.location.hostname;
     if (hostname.includes('localhost')) {
-      this.tenancyName = 'Propertyuae';
+      this.tenancyName = 'compassint';
     } else {
       this.tenancyName = hostname.split(".")[0]; 
     }

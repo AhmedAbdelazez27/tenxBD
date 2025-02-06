@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
     this.initLanguage();
     let hostname = window.location.hostname;
     if (hostname.includes('localhost')) {
-      this.tenancyName = 'Propertyuae';
+      this.tenancyName = 'compassint';
     } else {
       this.tenancyName = hostname.split(".")[0]; 
     }

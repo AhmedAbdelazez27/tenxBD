@@ -57,7 +57,7 @@
             </div>
             <div class="carousel-inner">
               <div *ngFor="let slide of sliderData; let i = index" class="carousel-item" [class.active]="i === 0">
-                    <img [src]="slide?.imagePath" class="d-block w-100" />
+                    <img [src]="logoFullUrl+slide?.imagePath" class="d-block w-100" />
                     <div class="carousel-caption d-none d-md-block">
                         <h1>
                           {{ currentLang === 'ar' ? slide.titleAr : slide.titleEn }}
@@ -73,7 +73,7 @@
         <div class="container">
             <div class="row" *ngIf="aboutInfo">
                 <div class="col-xl-6 p-0">
-                    <img [src]="aboutInfo?.aboutUsFilepath" class="about-img radius-left" />
+                    <img [src]="logoFullUrl+aboutInfo?.aboutUsFilepath" class="about-img radius-left" />
                 </div>
                 <div class="col-xl-6 p-0">
                     <div class="back-white p-4 h-100 w-100 radius-right">
@@ -107,7 +107,7 @@
 
                         <div class="item">
                             <div class="card">
-                                <img [src]="product?.filepath" class="card-img-top" />
+                                <img [src]="logoFullUrl+product?.filepath" class="card-img-top" />
                                 <div class="card-body">
                                     <h5 class="card-title dark-blue">{{ currentLang === 'ar' ? product?.nameAr : product?.nameEn }}</h5>
                                     <p class="font-14" [innerHTML]="currentLang === 'ar' ? product?.contentAr : product?.contentEn| truncateHtml:100" style="height: 50px;">
@@ -146,7 +146,7 @@
 
                           <div *ngIf="item[0]" class="radius back-white p-4 row mb-3">
                               <div class="col-xl-4 col-lg-3 p-0">
-                                  <img [src]="item[0]?.filepath" class="about-img radius service-img" style="width: 100%; height: 250px;" />
+                                  <img [src]="logoFullUrl+item[0]?.filepath" class="about-img radius service-img" style="width: 100%; height: 250px;" />
                               </div>
                               <div class="col-xl-7 col-lg-8 p-0 px-lg-3">
                                   <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">{{ currentLang === 'ar' ? item[0]?.nameAr : item[0]?.nameEn }}</h5>
@@ -165,7 +165,7 @@
                           </div>
                           <div *ngIf="item[1]" class="radius back-white p-4 row mb-3">
                               <div class="col-xl-4 col-lg-3 p-0">
-                                  <img [src]="item[1]?.filepath" class="about-img radius service-img" style="width: 100%; height: 250px;"  />
+                                  <img [src]="logoFullUrl+item[1]?.filepath" class="about-img radius service-img" style="width: 100%; height: 250px;"  />
                               </div>
                               <div class="col-xl-8 col-lg-9 p-0 px-lg-3">
                                   <h5 class="card-title dark-blue mb-2 mt-2 mt-lg-0">{{ currentLang === 'ar' ? item[1]?.nameAr : item[1]?.nameEn }}</h5>
@@ -216,7 +216,7 @@
                         <ng-template carouselSlide>
                           <div class="item">
                               <div class="project-container" style="height:270px">
-                                  <img [src]="project?.filepath" class="image" />
+                                  <img [src]="logoFullUrl+logoFullUrl+project?.filepath" class="image" />
                                   <div class="overlay">
                                       <h6 class="whit text-start mb-3">{{ currentLang === 'ar' ? project.nameAr : project.nameEn }}</h6>
       

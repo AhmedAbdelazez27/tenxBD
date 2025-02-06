@@ -9,6 +9,7 @@ import { LandingService } from '../../../servicesApi/landing.service';
 import { SpinnerService } from '../../../../../../shared/services/spinner.service';
 import { DialogModule } from 'primeng/dialog';
 import { TranslationService } from '../../../../../../shared/services/translation.service';
+import { GlobalConfigService } from '../../../../../../shared/services/shared/services/global-config.service';
 
 @Component({
   selector: 'app-service-inner',
@@ -27,6 +28,7 @@ export class ServiceInnerComponent implements OnInit{
   displayDialog: boolean =false;
   logoImg: any;
   isRtl : boolean=false;
+  logoFullUrl: string;
 
   constructor(
      private landingService: LandingService,
@@ -36,12 +38,14 @@ export class ServiceInnerComponent implements OnInit{
         private translate: TranslateService,
         private route: ActivatedRoute,
         private fb: FormBuilder,
-        private translationService: TranslationService
-  ){
+        private translationService: TranslationService,
+        private configService: GlobalConfigService
+  ) {
+    this.logoFullUrl = this.configService.baseUrl || "";
     
     let hostname = window.location.hostname;
     if (hostname.includes('localhost')) {
-      this.tenancyName = 'Propertyuae';
+      this.tenancyName = 'compassint';
     } else {
       this.tenancyName = hostname.split(".")[0]; 
     }

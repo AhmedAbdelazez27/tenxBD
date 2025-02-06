@@ -6,6 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LandingService } from '../../servicesApi/landing.service';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { TranslationService } from '../../../../../shared/services/translation.service';
+import { GlobalConfigService } from '../../../../../shared/services/shared/services/global-config.service';
 
 @Component({
   selector: 'app-general',
@@ -26,14 +27,17 @@ export class GeneralComponent implements OnInit{
   logoImg: any;
   isRtl : boolean=false;
   tenancyName: string;
+  logoFullUrl: string;
 
   constructor(
     private router : Router,
     private _SpinnerService: SpinnerService,
     private translate: TranslateService,
     private landingService: LandingService,
-    private translationService : TranslationService
-  ){
+    private translationService : TranslationService,
+    private configService: GlobalConfigService
+  ) {
+    this.logoFullUrl = this.configService.baseUrl || "";
     this.currentLang = this.translate.currentLang || this.translate.defaultLang;
     this.isRtl =this.currentLang == 'ar' ? true :false ;
     if (this.currentLang == 'ar') {
@@ -85,7 +89,7 @@ export class GeneralComponent implements OnInit{
 
     let hostname = window.location.hostname;
     if (hostname.includes('localhost')) {
-      this.tenancyName = 'Propertyuae';
+      this.tenancyName = 'compassint';
     } else {
       this.tenancyName = hostname.split(".")[0]; 
     }
