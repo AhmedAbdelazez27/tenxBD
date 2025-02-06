@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AboutusService } from '../../servicesApi/aboutus.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { SpinnerService } from '../../../../../shared/services/spinner.service';
@@ -29,7 +28,6 @@ export class GeneralComponent implements OnInit{
   tenancyName: string;
 
   constructor(
-    private _AboutusService:AboutusService,
     private router : Router,
     private _SpinnerService: SpinnerService,
     private translate: TranslateService,

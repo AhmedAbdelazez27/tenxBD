@@ -13,12 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class AboutComponent {
   selectedTab?: string ='General';
 
-  constructor(private router:Router){
+  constructor(){
 
-  }
-
-  switchTab(tab: string): void {
-    this.selectedTab = tab;
-    this.router.navigate([`/Main/AboutUs/${tab}`]);
   }
 }

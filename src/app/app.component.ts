@@ -14,6 +14,8 @@ import { SpinnerService } from './shared/services/spinner.service';
 })
 export class AppComponent implements OnInit{
   private renderer: Renderer2;
+  tenancyName: string;
+
   constructor(
     private translate: TranslateService,
     private landingService:LandingService,
@@ -22,11 +24,17 @@ export class AppComponent implements OnInit{
   ){
     this.renderer = rendererFactory.createRenderer(null, null);
     this.initLanguage();
+    let hostname = window.location.hostname;
+    if (hostname.includes('localhost')) {
+      this.tenancyName = 'Propertyuae';
+    } else {
+      this.tenancyName = hostname.split(".")[0]; 
+    }
   }
   ngOnInit(): void {
     this._SpinnerService.showSpinner();
      // Fetch slider data once at app initialization
-     this.landingService.getSlider().subscribe({
+     this.landingService.getSlider(this.tenancyName).subscribe({
       next : (res)=>{
         console.log("res = ",res?.result[0]?.themePrimaryColor);
         

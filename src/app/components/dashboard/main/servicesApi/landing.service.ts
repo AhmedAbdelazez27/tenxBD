@@ -8,6 +8,8 @@ import { tap } from 'rxjs/operators';
 })
 export class LandingService {
   private baseUrl = 'http://compassint.ddns.net:2027/api/services/app/';
+  // private baseUrl = `https://api.tenxerp.com/api/api/services/app/`;
+  
   
   // BehaviorSubject to hold slider data
   private sliderDataSubject = new BehaviorSubject<any>({});
@@ -18,9 +20,9 @@ export class LandingService {
   constructor(private http: HttpClient) {}
 
   // Fetch data from API
-  getSlider(): Observable<any> {
+  getSlider(companyName:string): Observable<any> {
     return this.http
-      .get<any>(`${this.baseUrl}CrmWebsiteBDSetup/GetAllForWebsite?TenancyName=Propertyuae`)
+      .get<any>(`${this.baseUrl}CrmWebsiteBDSetup/GetAllForWebsite?TenancyName=${companyName}`)
       .pipe(
         tap((data) => {
           // Update BehaviorSubject with the fetched data
@@ -67,21 +69,6 @@ export class LandingService {
   }
   getServiceDetails(tenancyName:string,aliasName:string): Observable<any>{
     return this.http.get<any>(`${this.baseUrl}CrmServices/GetByNameAlias?TenancyName=${tenancyName}&NameAlias=${aliasName}`)
-  }
-
-
-
-
-  getSingleHallCouncils(id:any): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}WebsiteHallsCouncils/GetDetailForWebsiteById?Id=${id}`)
-  }
-
-  getAllTmAutoCouponsForWebsite(): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}TmAutoCoupons/GetAllTmAutoCouponsForWebsite`)
-  }
-
-  getAllPartnersForWebsite():Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}WebsiteOurPartners/GetAllWebsiteOurPartnersForWebsite `)
   }
 
 }
