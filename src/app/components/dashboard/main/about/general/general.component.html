@@ -76,13 +76,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-6 p-0">
-                    <img [src]="aboutData?.visionImage" style="height: 350px;" class="about-img radius-left">
+                    <img [src]="logoFullUrl+aboutData?.visionImage" style="height: 350px;" class="about-img radius-left">
                 </div>
                 <div class="col-xl-6 p-0">
                     <div class="back-white p-4 h-100 w-100 radius-right">
                         <h2 class="blue">Vision</h2>
-                        <p class="text-justify">
-                            {{ currentLang === 'ar' ? aboutData?.visionAr : aboutData?.visionEn }}
+                        <p class="text-justify" [innerHTML]="currentLang === 'ar' ? aboutData?.visionAr : aboutData?.visionEn">
+                            
                         </p>
 
                     </div>
@@ -98,13 +98,13 @@
                 <div class="col-xl-6 p-0">
                     <div class="back-white p-4 h-100 w-100 radius-left">
                         <h2 class="blue">Mission</h2>
-                        <p class="text-justify">
-                            {{ currentLang === 'ar' ? aboutData?.missionAr : aboutData?.missionEn }}</p>
+                        <p class="text-justify" [innerHTML]="currentLang === 'ar' ? aboutData?.missionAr : aboutData?.missionEn">
+                           </p>
                     </div>
 
                 </div>
                 <div class="col-xl-6 p-0">
-                    <img [src]="aboutData?.missionImage" style="height: 350px;" class="about-img radius-right w-100">
+                    <img [src]="logoFullUrl+aboutData?.missionImage" style="height: 350px;" class="about-img radius-right w-100">
                 </div>
             </div>
         </div>
@@ -113,13 +113,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-6 p-0">
-                    <img [src]="aboutData?.valuesImage" style="height: 350px;" class="about-img radius-left">
+                    <img [src]="logoFullUrl+aboutData?.valuesImage" style="height: 350px;" class="about-img radius-left">
                 </div>
                 <div class="col-xl-6 p-0">
                     <div class="back-white p-4 h-100 w-100 radius-right">
                         <h2 class="blue">Value</h2>
-                        <p class="text-justify">
-                            {{ currentLang === 'ar' ? aboutData?.valuesAr : aboutData?.valuesEn }}
+                        <p class="text-justify" [innerHTML]=" currentLang === 'ar' ? aboutData?.valuesAr : aboutData?.valuesEn ">
                         </p>
 
 
@@ -142,7 +141,7 @@
                     <ng-template carouselSlide>
                         <div class="item">
                             <div class="card">
-                                <img [src]="team?.imagePath" class="card-img-top" />
+                                <img [src]="logoFullUrl+team?.imagePath" class="card-img-top" />
                                 <div class="card-body">
                                     <h5 class="card-title dark-blue">{{ currentLang === 'ar' ? team?.memberNameAr : team?.memberNameEN }}</h5>
                                     <p class="font-14">{{ currentLang === 'ar' ? team?.positionAr||'Employee' : team?.positionEn||'Employee' }}</p>

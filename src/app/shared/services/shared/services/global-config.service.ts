@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root' // Makes it globally available
 })
 export class GlobalConfigService {
-  readonly baseUrl: string = 'https://Attachment.tenxerp.com/';
+  readonly baseUrl: string = 'https://files.tenxerp.com/';
 
   constructor() {}
 }
