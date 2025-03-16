@@ -11,7 +11,7 @@ import { LandingService } from '../../../components/dashboard/main/servicesApi/l
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent implements OnInit{
-  socialLinks ?: { linkedInLink: any; instagramLink: any; facebookLink: any; email: any; addressAr: any;addressEn: any; tel: any; };
+  socialLinks ?: { linkedInLink: any; instagramLink: any; facebookLink: any; email: any; addressAr: any;addressEn: any; tel: any;   twitterLink:any ; pinterest :any };
   currentLang: string;
 
   constructor(private landingService: LandingService ,private translate: TranslateService,){
@@ -29,6 +29,8 @@ export class FooterComponent implements OnInit{
         tel :  data[0]?.tel,
         addressAr :  data[0]?.addressAr,
         addressEn :  data[0]?.addressEn,
+        twitterLink : data[0]?.twitterLink,
+        pinterest : data[0]?.pinterest,
       }
       
     });

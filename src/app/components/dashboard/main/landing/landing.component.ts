@@ -113,8 +113,8 @@ export class LandingComponent implements OnInit {
         autoplayHoverPause: true,
         responsive: {
           0: { items: 1 },
-          600: { items: 1},
-          1000: { items: 2},
+          600: { items: 2},
+          1000: { items: 3},
         },
         navText: [ '<span class="navv">&lt;</span>', // Add custom class for "Previous"
           '<span class="navv">&gt;</span>']
@@ -137,10 +137,10 @@ export class LandingComponent implements OnInit {
             items: 1,
           },
           600: {
-            items: 1,
+            items: 2,
           },
           1000: {
-            items: 2,
+            items: 3,
           },
         },
         navText: [ '<span class="navv">&lt;</span>', // Add custom class for "Previous"

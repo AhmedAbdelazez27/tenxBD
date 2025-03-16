@@ -114,6 +114,22 @@
                 </div>
                 <p class="mb-0">{{ 'Facebook' | translate }}</p>
               </div>
+              <div *ngIf="socialLinks?.twitterLink" class="d-flex gap-3 mb-4 align-items-center">
+                <div class="footer-icon">
+                  <a [href]="socialLinks?.twitterLink" target="_blank" rel="noopener noreferrer">
+                    <img src="../../../../assets/images/Twitter.png" alt="Twitter" />
+                  </a>
+                </div>
+                <p class="mb-0"> {{ 'Twitter' | translate }}</p>
+              </div> 
+              <div *ngIf="socialLinks?.pinterest" class="d-flex gap-3 mb-4 align-items-center">
+                <div class="footer-icon">
+                  <a [href]="socialLinks?.pinterest" target="_blank" rel="noopener noreferrer">
+                    <img src="../../../../assets/images/Pinterest.png" alt="Pinterest" />
+                  </a>
+                </div>
+                <p class="mb-0"> {{ 'Pinterest' | translate }}</p>
+              </div>
             </div>
             
         </div>

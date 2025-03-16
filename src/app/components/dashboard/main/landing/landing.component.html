@@ -110,7 +110,7 @@
                                 <img [src]="logoFullUrl+product?.filepath" class="card-img-top" />
                                 <div class="card-body">
                                     <h5 class="card-title dark-blue">{{ currentLang === 'ar' ? product?.nameAr : product?.nameEn }}</h5>
-                                    <p class="font-14" [innerHTML]="currentLang === 'ar' ? product?.contentAr : product?.contentEn| truncateHtml:100" style="height: 50px;">
+                                    <p class="font-14" [innerHTML]="currentLang === 'ar' ? product?.contentAr : product?.contentEn| truncateHtml:100" style="height: 56px;overflow: hidden;">
                                     </p>
     
                                     <div class="d-flex justify-content-start gap-3">
